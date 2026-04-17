@@ -19,7 +19,14 @@ const Marketplace = () => {
           
           </button>
       </div>
-      <div></div>
+
+      <div className='relative flex items-start justify-between gap-8 pb-8'>
+        <div>Filter</div>
+        <div className='flex-1 grid xl:grid-cols-2 gap-4'>
+          list
+        </div>
+
+      </div>
     </div>
   )
 }
