@@ -3,7 +3,7 @@ import React from 'react'
 const Marketplace = () => {
   return (
     <div>
-      <h1>Marketplace Pages!</h1>
+      <h1>Marketplace Page</h1>
     </div>
   )
 }
