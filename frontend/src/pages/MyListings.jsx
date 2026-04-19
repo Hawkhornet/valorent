@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { CheckCircle, DollarSign, Eye, Plus, TrendingUp } from 'lucide-react';
+import { CheckCircle, DollarSign, Eye, LockIcon, Plus, StarIcon, TrendingUp, XCircle } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import { vehicleIcons } from '../assets/assets';
 const MyListings = () => {
@@ -12,6 +12,21 @@ const MyListings = () => {
   const totalValue = userListings.reduce((sum, listing)=>sum + (listing.price ||0), 0);
   const activeListings = userListings.filter((listing)=>listing.status === 'active').length;
   const soldListings = userListings.filter((listing)=>listing.status === 'sold').length;
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "active":
+        return <CheckCircle className='size-3.5'/>;
+      case "ban":
+        return <CheckCircle className='size-3.5'/>;
+      case "sold":
+        return <DollarSign className='size-3.5'/>;
+      case "inactive":
+        return <XCircle className='size-3.5'/>;  
+      default:
+        return <Clock className='size-3.5'/>;
+    }
+  }
 
 
 
@@ -58,6 +73,33 @@ const MyListings = () => {
             <div className='p-6'>
               <div className='flex items-start gap-4 justify-between mb-4'>
                 {vehicleIcons[listing.vehicle]}
+                <div className='flex-1'>
+                  <div className='flex justify-between items-start'>
+                    <h3 className='text-lg font-semibold text-gray-800'>{listing.title}</h3>
+                    <div className='flex item-center gap-2'>
+                        <div className='relative group'>
+                          
+                          <div className='invisible group-hover:visible absolute right-0 top-0 pt-4.5 z-10'>
+                            <div className='bg-white text-gray-600 text-xs rounded border border-gray-200 p-2 px-3'>
+                              
+                              <button className='text-nowrap'>
+
+                              </button>
+                            </div>
+
+                          </div>
+                          </div> 
+                        
+                    </div>
+                  </div>
+                  <p>
+                    {listing.exterior_color} -
+                    <span className='capitalize'> {listing.body_type}</span>
+                    </p>
+                    <span>
+                      {getStatusIcon(listing.status)}{" "}<span>{listing.status}</span>
+                    </span>
+                </div>
               </div>
             </div>
           </div>
