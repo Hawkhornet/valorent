@@ -1,8 +1,9 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Eye, Plus } from 'lucide-react';
+import { CheckCircle, DollarSign, Eye, Plus, TrendingUp } from 'lucide-react';
 import StatCard from '../components/StatCard';
+import { vehicleIcons } from '../assets/assets';
 const MyListings = () => {
   const {userListings, balance} = useSelector((state)=>state.listing)
   const currency = import.meta.env.VITE_CURRENCY || 'රු';
@@ -31,8 +32,40 @@ const MyListings = () => {
       </div>
       {/*Stats*/}
       <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
-        <StatCard title='Total Listings' value={userListings.length} icon={<Eye className='size-6 text-red-600' color='red'/>} />
+        <StatCard title='Total Listings' value={userListings.length} icon={<Eye className='size-6 text-indigo-600' />} color='indigo' />
+        <StatCard title='Active Listings' value={activeListings} icon={<CheckCircle className='size-6 text-green-600' />}color='green' />
+        <StatCard title='Rented' value={soldListings} icon={<TrendingUp className='size-6 text-red-600' />}color='red' />
+        <StatCard title='Total Value' value={`${currency}${totalValue.toFixed(2)}`} icon={<DollarSign className='size-6 text-blue-600' />}color='blue' />
       </div>
+      {/*Listings Table*/}
+      {userListings.length === 0 ?
+      (
+        <div className='bg-white rounded-lg border border-gray-200 p-16 text-center'>
+          <div className='w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+            <Plus className='size-6 text-gray-400' />
+          </div>
+          <h3 className='text-xl font-medium text-gray-800 mb-2'>No listing yet</h3>
+          <p>Start by creating your first vehicle listing!</p>
+          <button onClick={()=> navigate("/create-listing")} className='bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium'>Create First Listing</button>
+        </div>
+      )
+    :
+    (
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        {userListings.map((listing)=>(
+          <div key={listing.id}
+          className='bg-white rounded-lg border border-gray-200 hover:shadow-lg shadow-gray-200/70transition-shadow'>
+            <div className='p-6'>
+              <div className='flex items-start gap-4 justify-between mb-4'>
+                {vehicleIcons[listing.vehicle]}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+
+     
     </div>
   )
 }
