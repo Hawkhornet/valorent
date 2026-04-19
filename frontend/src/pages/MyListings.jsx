@@ -1,9 +1,10 @@
 import React from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { CheckCircle, DollarSign, Eye, Plus, TrendingUp } from 'lucide-react';
+import { CheckCircle, DollarSign, Edit, Eye, EyeOffIcon, LockIcon, Plus, StarIcon, TrashIcon, TrendingUp, XCircle } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import { vehicleIcons } from '../assets/assets';
+import Footer from '../components/Footer';
 const MyListings = () => {
   const {userListings, balance} = useSelector((state)=>state.listing)
   const currency = import.meta.env.VITE_CURRENCY || 'රු';
@@ -12,6 +13,48 @@ const MyListings = () => {
   const totalValue = userListings.reduce((sum, listing)=>sum + (listing.price ||0), 0);
   const activeListings = userListings.filter((listing)=>listing.status === 'active').length;
   const soldListings = userListings.filter((listing)=>listing.status === 'sold').length;
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "active":
+        return <CheckCircle className='size-3.5'/>;
+      case "ban":
+        return <CheckCircle className='size-3.5'/>;
+      case "sold":
+        return <DollarSign className='size-3.5'/>;
+      case "inactive":
+        return <XCircle className='size-3.5'/>;  
+      default:
+        return <Clock className='size-3.5'/>;
+    }
+  }
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "active":
+        return 'text-green-800';
+      case "ban":
+        return 'text-red-800';
+      case "sold":
+        return 'text-indigo-800';
+      case "inactive":
+        return 'text-gray-800';  
+      default:
+        return 'text-gray-800';
+    }
+  }
+
+  const toggleStatus = async (listing) => {
+
+  }
+  const deleteListing = async (listing) => {
+    
+  }
+  const markAsFeatured = async (listing) => {
+    
+  }
+
+
 
 
 
@@ -53,19 +96,56 @@ const MyListings = () => {
     (
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
         {userListings.map((listing)=>(
-          <div key={listing.id}
-          className='bg-white rounded-lg border border-gray-200 hover:shadow-lg shadow-gray-200/70transition-shadow'>
-            <div className='p-6'>
-              <div className='flex items-start gap-4 justify-between mb-4'>
-                {vehicleIcons[listing.vehicle]}
+                      <div key={listing.id} className='bg-white rounded-lg border border-gray-200 hover:shadow-lg shadow-gray-200/70 transition-shadow'>
+              <div className='p-6 flex flex-col min-h-[200px]'>
+
+                {/* Top — icon + title + status */}
+                <div className='flex items-start gap-3 mb-4'>
+                  <div className='p-2 bg-gray-100 rounded-xl'>
+                    {vehicleIcons[listing.vehicle]}
+                  </div>
+                  <div className='flex-1'>
+                    <div className='flex justify-between items-start'>
+                      <h3 className='text-lg font-semibold text-gray-800'>{listing.title}</h3>
+                      <span className={`flex items-center gap-1 text-xs ${getStatusColor(listing.status)}`}>
+                        {getStatusIcon(listing.status)} {listing.status}
+                      </span>
+                    </div>
+                    <p className='text-gray-500 text-sm'>
+                      {listing.exterior_color} - <span className='capitalize'>{listing.body_type}</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom — price + buttons */}
+                <div className='flex items-center justify-between pt-3 border-t border-gray-200 mt-auto'>
+                  <span className='text-xl font-bold text-gray-800'>
+                    {currency}{listing.price_per_day.toLocaleString()}
+                    <span className='text-sm font-normal text-gray-500'> /day</span>
+                  </span>
+                  <div className='flex items-center gap-2'>
+                    {listing.status !== 'sold' && (
+                      <button onClick={()=>deleteListing(listing.id)} className='p-2 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-red-500'>
+                        <TrashIcon className='size-4'/>
+                      </button>
+                    )}
+                    <button onClick={()=>navigate(`/edit-listing/${listing.id}`)} className='p-2 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-indigo-600'>
+                      <Edit className='size-4'/>
+                    </button>
+                    <button onClick={()=>toggleStatus} className='p-2 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-purple-600'>
+                      {listing.status === 'active' ? <EyeOffIcon className='size-4'/> : <EyeIcon className='size-4'/>}
+                    </button>
+                  </div>
+                </div>
+
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-    )}
+            
 
-     
+          ))}
+        </div>
+      )}
+      <Footer />
     </div>
   )
 }
