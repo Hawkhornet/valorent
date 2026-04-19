@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ArrowLeftIcon, FilterIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const Marketplace = () => {
   const navigate = useNavigate()
-  const [showFilterphone, setShowFilterphone] = React.useState(false)
+  const [showFilterPhone, setShowFilterPhone] = useState(false)
   return (
     <div className='px-6 md:px-16 lg:px-24 xl:px-32'>
       <div className='flex items-center justify-between text-slate-500'>
@@ -13,7 +13,7 @@ const Marketplace = () => {
           <ArrowLeftIcon className="size-4" />
           Back to Home
         </button>
-        <button onclick={()=>setShowFilterphone(true)} className='flex sm:hidden items-center gap-2 py-5'>
+        <button onclick={()=>setShowFilterPhone(true)} className='flex sm:hidden items-center gap-2 py-5'>
           <FilterIcon className='size-4'/>
            Filters
           
