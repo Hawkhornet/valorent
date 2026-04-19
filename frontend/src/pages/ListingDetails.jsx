@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   ArrowBigLeftIcon,
   ArrowUpRightFromSquareIcon,
@@ -15,6 +15,7 @@ import {
   ShoppingBag,
 } from 'lucide-react'
 import { vehicleIcons } from '../assets/assets'
+import { setChat } from '../app/features/chatSlice'
 
 const cardClass =
   'rounded-xl border border-gray-200 bg-white p-6 shadow-sm'
@@ -31,6 +32,8 @@ const formatShortDate = (value) => {
 }
 
 const ListingDetails = () => {
+
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const currency = import.meta.env.VITE_CURRENCY || 'රු'
 
@@ -41,6 +44,15 @@ const ListingDetails = () => {
     () => listings.find((item) => String(item.id) === String(listingId)),
     [listingId, listings]
   )
+
+  const rentVehicle = () => {
+  alert('Renting functionality is not implemented in this demo.')
+  }
+
+  const loadChatBox = () => {
+    if (!listing) return
+    dispatch(setChat({listing: listing}))
+}
 
   const [galleryIndex, setGalleryIndex] = useState(0)
 
@@ -229,20 +241,16 @@ const ListingDetails = () => {
               <p className="text-sm text-slate-500">Seller info unavailable.</p>
             )}
             <div className="mt-6 flex flex-col gap-3">
-              <button
-                type="button"
-                onClick={() => navigate('/messages')}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-orange-600"
-              >
-                <MessageCircle className="size-5" />
+              <button onClick={loadChatBox} className="flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-orange-600">
+                <MessageCircle className="size-4" />
                 Chat
               </button>
               <button
-                type="button"
+                onClick={rentVehicle}
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-purple-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-purple-700"
               >
-                <ShoppingBag className="size-5" />
-                Purchase
+                <ShoppingBag className="size-4" />
+                Rent
               </button>
             </div>
           </div>
