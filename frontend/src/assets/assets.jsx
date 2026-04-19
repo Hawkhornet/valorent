@@ -10,12 +10,12 @@ export const assets = {
 };
 
 export const vehicleIcons = {
-    sedan: <Car size-10 p-2 rounded/>,
-    suv: <Car size-10 p-2 rounded/>,
-    hatchback: <Car size-10 p-2 rounded/>,
-    van: <Van size-10 p-2 rounded/>,
-    truck: <Truck size-10 p-2 rounded/>,
-    coupe: <Car size-10 p-2 rounded/>,
+    sedan: <Car className="size-10 p-2 rounded" strokeWidth={1.75} />,
+    suv: <Car className="size-10 p-2 rounded" strokeWidth={1.75} />,
+    hatchback: <Car className="size-10 p-2 rounded" strokeWidth={1.75} />,
+    van: <Van className="size-10 p-2 rounded" strokeWidth={1.75} />,
+    truck: <Truck className="size-10 p-2 rounded" strokeWidth={1.75} />,
+    coupe: <Car className="size-10 p-2 rounded" strokeWidth={1.75} />,
 };
 export const dummyUsers = [
     {
