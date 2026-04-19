@@ -21,7 +21,7 @@ const FilterSidebar = ({showFilterPhone, setShowFilterPhone, filters, setFilters
 
     const [expandedSections, setExpandedSections] = React.useState({
         body_type: true,
-        price_per_day: true,
+        price: true,
         make: true,
         transmission_type: true,
         district: true,

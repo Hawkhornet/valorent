@@ -230,4 +230,62 @@ export const dummyListings = [
   },
 ];
 
+export const dummyMessages = [
+    {
+        id: 'msg104',
+        chatId: 'chat_1',
+        sender_id: 'user_1',
+        message: 'Hi, is this YouTube channel still available?',
+        createdAt: '2025-10-29T09:00:00.000Z',
+    },
+    {
+        id: 'msg105',
+        chatId: 'chat_1',
+        sender_id: 'user_2',
+        message: "Yes, it's still available. Are you interested in buying?",
+        createdAt: '2025-10-29T09:02:00.000Z',
+    },
+    {
+        id: 'msg106',
+        chatId: 'chat_1',
+        sender_id: 'user_1',
+        message: 'Can you share recent analytics screenshots?',
+        createdAt: '2025-10-29T09:05:00.000Z',
+    },
+];
+
+export const dummyChats = [
+    {
+        id: 'chat_1',
+        chatUserId: 'user_1',
+        ownerUserId: 'user_2',
+        listingId: 'listing_1',
+        active: true,
+        lastMessage: 'Hi, is this YouTube channel still available?',
+        isLastMessageRead: false,
+        createdAt: '2025-10-28T12:34:56.000Z',
+        updatedAt: '2025-10-29T09:10:00.000Z',
+        messages: dummyMessages,
+        ownerUser: dummyUsers[0],
+        chatUser: dummyUsers[1],
+        listing: dummyListings[0],
+    },
+    {
+        id: 'chat_2',
+        chatUserId: 'user_2',
+        ownerUserId: 'user_3',
+        listingId: 'listing_2',
+        active: true,
+        lastMessage: 'Hey, is your Instagram fitness page for sale?',
+        isLastMessageRead: true,
+        createdAt: '2025-10-28T15:30:00.000Z',
+        updatedAt: '2025-10-29T10:00:00.000Z',
+        messages: dummyMessages,
+        ownerUser: dummyUsers[1],
+        chatUser: dummyUsers[2],
+        listing: dummyListings[1],
+    },
+];
+
+
 
