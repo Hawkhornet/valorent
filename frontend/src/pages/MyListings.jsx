@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { CheckCircle, DollarSign, Edit, Eye, EyeOffIcon, LockIcon, Plus, StarIcon, TrashIcon, TrendingUp, XCircle } from 'lucide-react';
+import { CheckCircle, DollarSign, Edit, Eye, EyeIcon, EyeOffIcon, LockIcon, Plus, StarIcon, TrashIcon, TrendingUp, XCircle } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import { vehicleIcons } from '../assets/assets';
 import Footer from '../components/Footer';
@@ -10,9 +10,11 @@ const MyListings = () => {
   const currency = import.meta.env.VITE_CURRENCY || 'රු';
   const navigate = useNavigate()
 
-  const totalValue = userListings.reduce((sum, listing)=>sum + (listing.price ||0), 0);
+  const totalValue = userListings
+    .filter((listing) => listing.status === 'rented')
+    .reduce((sum, listing) => sum + (listing.price_per_day || 0), 0);
   const activeListings = userListings.filter((listing)=>listing.status === 'active').length;
-  const soldListings = userListings.filter((listing)=>listing.status === 'sold').length;
+  const soldListings = userListings.filter((listing)=>listing.status === 'rented').length;
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -20,7 +22,7 @@ const MyListings = () => {
         return <CheckCircle className='size-3.5'/>;
       case "ban":
         return <CheckCircle className='size-3.5'/>;
-      case "sold":
+      case "rented":
         return <DollarSign className='size-3.5'/>;
       case "inactive":
         return <XCircle className='size-3.5'/>;  
