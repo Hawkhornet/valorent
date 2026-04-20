@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { ArrowLeftIcon, CheckCircle2, DollarSign, Loader2Icon } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { ArrowLeftIcon, CheckCircle2, ChevronLeftIcon, ChevronRightIcon, DollarSign, Loader2Icon, MapPin, MessageSquareMoreIcon, ShoppingBagIcon } from "lucide-react";
 import { vehicleIcons } from "../assets/assets";
+import { setChat } from "../app/features/chatSlice";
 const ListingDetails = () => {
+
+  const dispatch = useDispatch()
 
   const navigate = useNavigate()
   const currency = import.meta.env.VITE_CURRENCY || 'රු';
@@ -13,7 +16,18 @@ const ListingDetails = () => {
   const {listingId} = useParams()
   const {listings} = useSelector((state)=>state.listing)
 
-  
+  const [current, setCurrent] = useState(0)
+  const images = listing ? listing.images || [] : []
+
+  const prevSlide = () => setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+  const nextSlide = () => setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+
+  const rentVehicle = async () => {
+
+  }
+  const loadChatbox = () => {
+    dispatch(setChat({listing: listing}))
+  }
 
   useEffect(()=>{
     const listing = listings.find((listing)=>listing.id === listingId);
@@ -70,21 +84,150 @@ const ListingDetails = () => {
               {currency}
               {listing.price_per_day.toLocaleString()}
             </h3>
-            <p className="text-sm text-gray-500">Rupees</p>
+            <p className="text-md text-gray-500">/day</p>
 
           </div>
 
       </div>
 
         </div>
+
+         {/* Screenshot section */}
+         {images?.length > 0 && (
+          <div className="bg-white rounded-xl border border-gray-200 mb-5 overflow-hidden">
+            <div className="p-4">
+              <h4 className="font-semibold text-gray-800">Image Gallery</h4>
+              </div>
+              {/*Slider container */}
+              <div className="relative w-full aspect-video overflow-hidden">
+                  <div className="flex transition-transform duration-300 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
+                    {images.map((image, index) => (
+                      <img key={index} src={image} alt="Listing Proof" className="w-full shrink-0" />
+                    ))}
+                  </div>
+
+                  {/* Navigation buttons */}
+                  <button onClick={prevSlide} className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow">
+                    <ChevronLeftIcon className="w-5 h-5 text-gray-700"/>
+                  </button>
+
+                  <button onClick={nextSlide} className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow">
+                    <ChevronRightIcon className="w-5 h-5 text-gray-700"/>
+                  </button>
+
+                  {/*Dot indicators */}
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+                    {images.map((_, index) => (
+                     <button onClick={()=> setCurrent(index)} key={index} className={`w-2.5 h-2.5 rounded-full ${index === current ? 'bg-red-600' : 'bg-gray-300'}`}/> 
+                    ))}
+                  </div>
+              </div>
+          </div>
+         )}
+
+          {/*Description section */}
+          <div className="bg-white rounded-xl border border-gray-200 mb-5">
+            <div className="p-4 border-b border-gray-100">
+              <h4 className="font-semibold text-gray-800">Description</h4>
+            </div>
+            <div className="p-4 text-sm text-gray-600">
+              {listing.description}
+            </div>
+          </div>
+
+          {/* Car Overview Section */}
+          <div className="bg-white rounded-xl border border-gray-200 mb-5">
+            <div className="p-4 border-b border-gray-100">
+              <h4 className="font-semibold text-gray-800">Car Overview</h4>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 p-4 text-sm">
+              <div>
+                <p className="text-gray-500">Interior Color</p>
+                <p className="font-medium capitalize">{listing.interior_color}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Horsepower</p>
+                <p className="font-medium capitalize">{listing.horsepower}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Doors</p>
+                <p className="font-medium capitalize">{listing.doors}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Fuel Type</p>
+                <p className="font-medium capitalize">{listing.fuel_type}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">No. of Cylinder</p>
+                <p className="font-medium capitalize">{listing.cylinders}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Engine capacity(cc)</p>
+                <p className="font-medium capitalize">{listing.engine_capacity_cc}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Trim</p>
+                <p className="font-medium capitalize">{listing.trim}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Exterior Color</p>
+                <p className="font-medium capitalize">{listing.exterior_color}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Body Type</p>
+                <p className="font-medium capitalize">{listing.body_type}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Seating Capacity</p>
+                <p className="font-medium capitalize">{listing.seating_capacity}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Transmission Type</p>
+                <p className="font-medium capitalize">{listing.transmission_type}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Located in</p>
+                <p className="font-medium capitalize">{listing.city}</p>
+                  
+              </div>
+            </div>
+          </div>
+
       </div>
+         
       {/* seller info & perchase button */}
-      <div></div>
+      <div className="bg-white min-w-full md:min-w-[370px] rounded-xl border border-gray-200 p-5 max-md:mb-10">
+        <h4 className="font-semibold text-gray-800 mb-4">Seller Information</h4>
+        <div className="flex items-center gap3 mb-2">
+          <img src={listing.owner?.image} alt="seller image" className="size-10 rounded-full"/>
+          <div>
+            <p className="font-medium text-gray-800">{listing.owner?.name}</p>
+            <p className="text-sm text-gray-500">{listing.owner?.email}</p>
+          </div>
+        </div>
+        <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
+          <p>Member Since <span className="font-medium">{new Date(listing.owner?.createdAt).toLocaleDateString()}</span></p>
+        </div>
+        <button onClick={loadChatbox} className="w-full bg-yellow-600 text-white py-2 rounded-lg hover:bg-yellow-700 transition text-sm font-medium flex items-center
+        justify-center gap-2">
+          <MessageSquareMoreIcon className="size-4"/> Chat
+        </button>
+        <button onClick={rentVehicle} className="w-full mt-2 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition text-sm font-medium flex items-center
+        justify-center gap-2">
+          <ShoppingBagIcon className="size-4"/> Rent
+        </button>
+      </div>
     </div>
+     <div className="bg-white border-t border-gray-200 p-4 text-center mt-28">
+         <p className="text-sm text-gray-500">
+            Copyright © 2025 <span className="text-gray-600">valorent</span>. All rights reserved.
+         </p>
+     </div>
     </div>
   ) : (
     <div className="h-screen flex justify-center items-center">
       <Loader2Icon className="size-7 animate-spin text-indigo-600" />
+      
     </div>
   )
 

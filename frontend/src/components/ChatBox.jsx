@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { dummyChats } from '../assets/assets'
 import { Loader2Icon, SendIcon, XIcon } from 'lucide-react'
@@ -19,6 +19,10 @@ const ChatBox = () => {
     const [isSending, setIsSending] = React.useState(false)
 
     const fetchChat = async () => {
+        const foundChats = {
+            ...dummyChats[0],
+            listing: listing
+        }
         setChat(dummyChats[0]);
         setMessages(dummyChats[0].messages);
         setIsLoading(false);
