@@ -99,10 +99,10 @@ const ListingDetails = () => {
               <h4 className="font-semibold text-gray-800">Image Gallery</h4>
               </div>
               {/*Slider container */}
-              <div className="relative w-full aspect-video overflow-hidden">
+              <div className="relative w-full overflow-hidden">
                   <div className="flex transition-transform duration-300 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
                     {images.map((image, index) => (
-                      <img key={index} src={image} alt="Listing Proof" className="w-full shrink-0" />
+                      <img key={index} src={image} alt="Listing Proof" className="w-full h-full object-contain shrink-0" />
                     ))}
                   </div>
 
