@@ -22,7 +22,7 @@ const ListingDetails = () => {
   const prevSlide = () => setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1))
   const nextSlide = () => setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1))
 
-  const purchaseVehicle = async () => {
+  const rentVehicle = async () => {
 
   }
   const loadChatbox = () => {
@@ -84,7 +84,7 @@ const ListingDetails = () => {
               {currency}
               {listing.price_per_day.toLocaleString()}
             </h3>
-            <p className="text-sm text-gray-500">Rupees</p>
+            <p className="text-md text-gray-500">/day</p>
 
           </div>
 
@@ -142,11 +142,11 @@ const ListingDetails = () => {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-2 gap-6 p-4 text-sm">
               <div>
-                <p className="text-gray-500">interior color</p>
+                <p className="text-gray-500">Interior Color</p>
                 <p className="font-medium capitalize">{listing.interior_color}</p>
               </div>
               <div>
-                <p className="text-gray-500">horsepower</p>
+                <p className="text-gray-500">Horsepower</p>
                 <p className="font-medium capitalize">{listing.horsepower}</p>
               </div>
               <div>
@@ -154,7 +154,7 @@ const ListingDetails = () => {
                 <p className="font-medium capitalize">{listing.doors}</p>
               </div>
               <div>
-                <p className="text-gray-500">fuel Type</p>
+                <p className="text-gray-500">Fuel Type</p>
                 <p className="font-medium capitalize">{listing.fuel_type}</p>
               </div>
               <div>
@@ -162,7 +162,7 @@ const ListingDetails = () => {
                 <p className="font-medium capitalize">{listing.cylinders}</p>
               </div>
               <div>
-                <p className="text-gray-500">engine capacity(cc)</p>
+                <p className="text-gray-500">Engine capacity(cc)</p>
                 <p className="font-medium capitalize">{listing.engine_capacity_cc}</p>
               </div>
               <div>
@@ -187,8 +187,8 @@ const ListingDetails = () => {
               </div>
               <div>
                 <p className="text-gray-500">Located in</p>
-                <p className="font-medium capitalize">
-                  <MapPin className="size-4 mr-1 text-gray-400"/>{listing.city}</p>
+                <p className="font-medium capitalize">{listing.city}</p>
+                  
               </div>
             </div>
           </div>
@@ -212,9 +212,9 @@ const ListingDetails = () => {
         justify-center gap-2">
           <MessageSquareMoreIcon className="size-4"/> Chat
         </button>
-        <button onClick={purchaseVehicle} className="w-full mt-2 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition text-sm font-medium flex items-center
+        <button onClick={rentVehicle} className="w-full mt-2 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition text-sm font-medium flex items-center
         justify-center gap-2">
-          <ShoppingBagIcon className="size-4"/> Purchase
+          <ShoppingBagIcon className="size-4"/> Rent
         </button>
       </div>
     </div>
