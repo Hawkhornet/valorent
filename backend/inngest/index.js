@@ -6,7 +6,7 @@ export const inngest = new Inngest({ id: "vehicle-rental" });
 
 // Function to save user data to database
 const syncUserCreation = inngest.createFunction(
-  { id: "sync-user-from-clerk"},{ event: "clerk/user.created" },
+  { id: "sync-user-from-clerk", triggers: [{ event: "clerk/user.created" }] },
   async ({ event }) => {
     const { data } = event
 
