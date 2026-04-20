@@ -71,7 +71,7 @@ const MyListings = () => {
       <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-8'>
         <div>
           <h1 className='text-3xl font-bold text-gray-800'>My Listings</h1>
-          <p className='text-gray-600 mt-1'>Manage your vehicle renting account listings</p>
+          <p className='text-gray-600 mt-1'>Manage your vehicle rental listings</p>
         </div>
         <button onClick={()=>navigate('/create-listing')} className='bg-red-600 
         hover:bg-red-700 text-white px-6 py-2 rounded font-medium 

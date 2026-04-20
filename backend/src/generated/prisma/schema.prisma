@@ -2,9 +2,9 @@
 // Vehicle Rental Marketplace — Neon (PostgreSQL) + Prisma
 
 generator client {
-    provider        = "prisma-client-js"
-    output   = "../src/generated/prisma"
-    previewFeatures = ["driverAdapters"]
+  provider        = "prisma-client-js"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -87,10 +87,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  listings  Listing[]
-  orders    Order[]
-  chats     Chat[]
-  messages  Message[]
+  listings Listing[]
+  orders   Order[]
+  chats    Chat[]
+  messages Message[]
 }
 
 // ─────────────────────────────────────────────
@@ -98,43 +98,43 @@ model User {
 // ─────────────────────────────────────────────
 
 model Listing {
-  id                String          @id @default(cuid())
-  ownerId           String
-  title             String
-  make              Make
-  model             String
-  year              Int
-  trim              String?
-  body_type         BodyType
-  exterior_color    String
-  interior_color    String?
-  horsepower        Int
-  doors             Int?
-  fuel_type         FuelType
-  cylinders         Int?
-  engine_capacity_cc Int?
+  id                   String           @id @default(cuid())
+  ownerId              String
+  title                String
+  make                 Make
+  model                String
+  year                 Int
+  trim                 String?
+  body_type            BodyType
+  exterior_color       String
+  interior_color       String?
+  horsepower           Int
+  doors                Int?
+  fuel_type            FuelType
+  cylinders            Int?
+  engine_capacity_cc   Int?
   battery_capacity_kwh Float?
-  range_km          Int?
-  seating_capacity  Int
-  transmission_type TransmissionType
-  mileage_km        Int
-  price_per_day     Float
-  deposit           Float?
-  min_rental_days   Int             @default(1)
-  max_rental_days   Int             @default(30)
-  description       String
-  available         Boolean         @default(true)
-  city              String
-  district          District
-  status            ListingStatus   @default(active)
-  images            String[]        // Array of image URLs
-  platformAssured   Boolean         @default(false)
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  range_km             Int?
+  seating_capacity     Int
+  transmission_type    TransmissionType
+  mileage_km           Int
+  price_per_day        Float
+  deposit              Float?
+  min_rental_days      Int              @default(1)
+  max_rental_days      Int              @default(30)
+  description          String
+  available            Boolean          @default(true)
+  city                 String
+  district             District
+  status               ListingStatus    @default(active)
+  images               String[] // Array of image URLs
+  platformAssured      Boolean          @default(false)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
 
-  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  orders   Order[]
-  chats    Chat[]
+  owner  User    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  orders Order[]
+  chats  Chat[]
 }
 
 // ─────────────────────────────────────────────
@@ -142,17 +142,17 @@ model Listing {
 // ─────────────────────────────────────────────
 
 model Order {
-  id           String      @id @default(cuid())
-  listingId    String
-  ownerId      String
-  userId       String
+  id            String      @id @default(cuid())
+  listingId     String
+  ownerId       String
+  userId        String
   price_per_day Float
-  rental_start DateTime
-  rental_end   DateTime
-  status       OrderStatus @default(active)
-  isPaid       Boolean     @default(false)
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  rental_start  DateTime
+  rental_end    DateTime
+  status        OrderStatus @default(active)
+  isPaid        Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -163,16 +163,16 @@ model Order {
 // ─────────────────────────────────────────────
 
 model Chat {
-  id        String   @id @default(cuid())
-  listingId String
-  userId    String   // renter
-  ownerId   String   // listing owner
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  active              Boolean           @default(true)
-  lastMessage         String            @default("")
-  isLastMessageRead   Boolean           @default(true)
-  lastMessageSenderId String            @default("")
+  id                  String   @id @default(cuid())
+  listingId           String
+  userId              String // renter
+  ownerId             String // listing owner
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  active              Boolean  @default(true)
+  lastMessage         String   @default("")
+  isLastMessageRead   Boolean  @default(true)
+  lastMessageSenderId String   @default("")
 
   listing  Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -180,11 +180,11 @@ model Chat {
 }
 
 model Message {
-  id         String   @id @default(cuid())
-  chatId     String
-  senderId   String
-  message    String
-  createdAt  DateTime @default(now())
+  id        String   @id @default(cuid())
+  chatId    String
+  senderId  String
+  message   String
+  createdAt DateTime @default(now())
 
   chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
   sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
