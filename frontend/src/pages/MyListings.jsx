@@ -3,16 +3,21 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { CheckCircle, DollarSign, Edit, Eye, EyeIcon, EyeOffIcon, LockIcon, Plus, StarIcon, TrashIcon, TrendingUp, XCircle } from 'lucide-react';
 import StatCard from '../components/StatCard';
-import { vehicleIcons } from '../assets/assets';
+import { dummyOrders, vehicleIcons } from '../assets/assets';
 import Footer from '../components/Footer';
 const MyListings = () => {
   const {userListings, balance} = useSelector((state)=>state.listing)
   const currency = import.meta.env.VITE_CURRENCY || 'රු';
   const navigate = useNavigate()
 
-  const totalValue = userListings
-    .filter((listing) => listing.status === 'rented')
-    .reduce((sum, listing) => sum + (listing.price_per_day || 0), 0);
+  const totalValue = dummyOrders
+    .filter((order) => order.status === 'active' || order.status === 'completed')
+    .reduce((sum, order) => {
+        const days = Math.round(
+            (new Date(order.rental_end) - new Date(order.rental_start)) / (1000 * 60 * 60 * 24)
+        )
+        return sum + order.price_per_day * days
+    }, 0)
   const activeListings = userListings.filter((listing)=>listing.status === 'active').length;
   const soldListings = userListings.filter((listing)=>listing.status === 'rented').length;
 
@@ -66,7 +71,7 @@ const MyListings = () => {
       <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-8'>
         <div>
           <h1 className='text-3xl font-bold text-gray-800'>My Listings</h1>
-          <p className='text-gray-600 mt-1'>Manage your vehicle renting account listings</p>
+          <p className='text-gray-600 mt-1'>Manage your vehicle rental listings</p>
         </div>
         <button onClick={()=>navigate('/create-listing')} className='bg-red-600 
         hover:bg-red-700 text-white px-6 py-2 rounded font-medium 
@@ -80,7 +85,7 @@ const MyListings = () => {
         <StatCard title='Total Listings' value={userListings.length} icon={<Eye className='size-6 text-indigo-600' />} color='indigo' />
         <StatCard title='Active Listings' value={activeListings} icon={<CheckCircle className='size-6 text-green-600' />}color='green' />
         <StatCard title='Rented' value={soldListings} icon={<TrendingUp className='size-6 text-red-600' />}color='red' />
-        <StatCard title='Total Value' value={`${currency}${totalValue.toFixed(2)}`} icon={<DollarSign className='size-6 text-blue-600' />}color='blue' />
+        <StatCard title='Rental Earnings' value={`${currency}${totalValue.toFixed(2)}`} icon={<DollarSign className='size-6 text-blue-600' />}color='blue' />
       </div>
       {/*Listings Table*/}
       {userListings.length === 0 ?

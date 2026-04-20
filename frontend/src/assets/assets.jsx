@@ -287,5 +287,47 @@ export const dummyChats = [
     },
 ];
 
+export const dummyOrders = [
+    {
+        id: '37410546-9b88-4917-a396-612e10d1df13',
+        listingId: 'listing_1',
+        ownerId: 'user_1',
+        userId: 'user_2',
+        price_per_day: 8500,
+        rental_start: '2026-04-18T00:00:00.000Z',
+        rental_end: '2026-04-23T00:00:00.000Z',
+        status: 'active',
+        isPaid: true,
+        createdAt: '2026-04-17T10:22:00.000Z',
+        listing: dummyListings[0],
+    },
+    {
+        id: '0bd0ded3-756e-439a-8e81-2e00353cdad5',
+        listingId: 'listing_2',
+        ownerId: 'user_1',
+        userId: 'user_2',
+        price_per_day: 12000,
+        rental_start: '2026-04-19T00:00:00.000Z',
+        rental_end: '2026-04-21T00:00:00.000Z',
+        status: 'ending_soon',
+        isPaid: true,
+        createdAt: '2026-04-18T08:00:00.000Z',
+        listing: dummyListings[1],
+    },
+    {
+        id: 'a3f92c11-d4e7-4b2a-9c13-ff8820aabbcc',
+        listingId: 'listing_3',
+        ownerId: 'user_1',
+        userId: 'user_2',
+        price_per_day: 6500,
+        rental_start: '2026-04-01T00:00:00.000Z',
+        rental_end: '2026-04-05T00:00:00.000Z',
+        status: 'completed',
+        isPaid: true,
+        createdAt: '2026-03-30T14:10:00.000Z',
+        listing: dummyListings[2],
+    },
+]
+
 
 
