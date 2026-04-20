@@ -32,6 +32,11 @@ const ListingDetails = () => {
       <div className="flex-1 max-md:w-full">
         {/* Top Section */}
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-5">
+
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+
+
+
           <div className="flex items-start gap-3">
             <div className="p-2 rounded-xl">{vehicleIcons[listing.body_type.toLowerCase()]}</div>
             <div>
@@ -59,6 +64,18 @@ const ListingDetails = () => {
               </div>
             </div>
           </div>
+
+          <div className="text-right">
+            <h3 className="text-2xl font-bold text-gray-gray-800">
+              {currency}
+              {listing.price_per_day.toLocaleString()}
+            </h3>
+            <p className="text-sm text-gray-500">Rupees</p>
+
+          </div>
+
+      </div>
+
         </div>
       </div>
       {/* seller info & perchase button */}
