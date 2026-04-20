@@ -1,4 +1,5 @@
 import { Inngest } from "inngest";
+import prisma from "../lib/prisma.js"
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "vehicle-rental" });
@@ -51,7 +52,7 @@ const syncUserDeletion = inngest.createFunction(
     })
 
     const chats = await prisma.chat.findMany({
-        where: {OR: [{ ownerUserId: data.id }, { chatUserId: data.id }]}
+        where: {OR: [{ ownerId: data.id }, { userId: data.id }]}
     })
 
     if(listings.length === 0 && chats.length === 0){

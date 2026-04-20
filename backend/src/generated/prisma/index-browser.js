@@ -24,11 +24,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.6.0
+ * Prisma Client JS version: 7.7.0
  * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
  */
 Prisma.prismaVersion = {
-  client: "7.6.0",
+  client: "7.7.0",
   engine: "75cbdc1eb7150937890ad5465d861175c6624711"
 }
 
@@ -122,11 +122,9 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  email: 'email',
   name: 'name',
+  email: 'email',
   image: 'image',
-  earned: 'earned',
-  withdrawn: 'withdrawn',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -135,85 +133,71 @@ exports.Prisma.ListingScalarFieldEnum = {
   id: 'id',
   ownerId: 'ownerId',
   title: 'title',
-  platform: 'platform',
-  username: 'username',
-  followers_count: 'followers_count',
-  engagement_rate: 'engagement_rate',
-  monthly_views: 'monthly_views',
-  niche: 'niche',
-  price: 'price',
+  make: 'make',
+  model: 'model',
+  year: 'year',
+  trim: 'trim',
+  body_type: 'body_type',
+  exterior_color: 'exterior_color',
+  interior_color: 'interior_color',
+  horsepower: 'horsepower',
+  doors: 'doors',
+  fuel_type: 'fuel_type',
+  cylinders: 'cylinders',
+  engine_capacity_cc: 'engine_capacity_cc',
+  battery_capacity_kwh: 'battery_capacity_kwh',
+  range_km: 'range_km',
+  seating_capacity: 'seating_capacity',
+  transmission_type: 'transmission_type',
+  mileage_km: 'mileage_km',
+  price_per_day: 'price_per_day',
+  deposit: 'deposit',
+  min_rental_days: 'min_rental_days',
+  max_rental_days: 'max_rental_days',
   description: 'description',
-  verified: 'verified',
-  monetized: 'monetized',
-  country: 'country',
-  age_range: 'age_range',
+  available: 'available',
+  city: 'city',
+  district: 'district',
   status: 'status',
-  featured: 'featured',
   images: 'images',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   platformAssured: 'platformAssured',
-  isCredentialSubmitted: 'isCredentialSubmitted',
-  isCredentialVerified: 'isCredentialVerified',
-  isCredentialChanged: 'isCredentialChanged'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  ownerId: 'ownerId',
+  userId: 'userId',
+  price_per_day: 'price_per_day',
+  rental_start: 'rental_start',
+  rental_end: 'rental_end',
+  status: 'status',
+  isPaid: 'isPaid',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.ChatScalarFieldEnum = {
   id: 'id',
-  chatUserId: 'chatUserId',
-  ownerUserId: 'ownerUserId',
   listingId: 'listingId',
+  userId: 'userId',
+  ownerId: 'ownerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   active: 'active',
   lastMessage: 'lastMessage',
   isLastMessageRead: 'isLastMessageRead',
-  lastMessageSenderId: 'lastMessageSenderId',
-  isTokenAmountPaid: 'isTokenAmountPaid'
+  lastMessageSenderId: 'lastMessageSenderId'
 };
 
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
   chatId: 'chatId',
+  senderId: 'senderId',
   message: 'message',
-  sender_id: 'sender_id',
   createdAt: 'createdAt'
-};
-
-exports.Prisma.PlatformMessageScalarFieldEnum = {
-  id: 'id',
-  chatId: 'chatId',
-  message: 'message',
-  sender_id: 'sender_id',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.CredentialScalarFieldEnum = {
-  id: 'id',
-  listingId: 'listingId',
-  originalCredential: 'originalCredential',
-  updatedCredential: 'updatedCredential',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.TransactionScalarFieldEnum = {
-  id: 'id',
-  listingId: 'listingId',
-  ownerId: 'ownerId',
-  userId: 'userId',
-  amount: 'amount',
-  isPaid: 'isPaid',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.WithdrawalScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  amount: 'amount',
-  account: 'account',
-  isWithdrawn: 'isWithdrawn',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -230,56 +214,72 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.Platform = exports.$Enums.Platform = {
-  youtube: 'youtube',
-  instagram: 'instagram',
-  tiktok: 'tiktok',
-  facebook: 'facebook',
-  twitter: 'twitter',
-  linkedin: 'linkedin',
-  pinterest: 'pinterest',
-  snapchat: 'snapchat',
-  twitch: 'twitch',
-  discord: 'discord'
+exports.Make = exports.$Enums.Make = {
+  Toyota: 'Toyota',
+  Honda: 'Honda',
+  BYD: 'BYD',
+  Nissan: 'Nissan',
+  Suzuki: 'Suzuki',
+  Ford: 'Ford',
+  BMW: 'BMW',
+  Mercedes_Benz: 'Mercedes_Benz',
+  Audi: 'Audi',
+  Tata: 'Tata',
+  Kia: 'Kia',
+  Tesla: 'Tesla',
+  Volkswagen: 'Volkswagen'
 };
 
-exports.Niche = exports.$Enums.Niche = {
-  lifestyle: 'lifestyle',
-  fitness: 'fitness',
-  food: 'food',
-  travel: 'travel',
-  tech: 'tech',
-  gaming: 'gaming',
-  fashion: 'fashion',
-  beauty: 'beauty',
-  business: 'business',
-  education: 'education',
-  entertainment: 'entertainment',
-  music: 'music',
-  art: 'art',
-  sports: 'sports',
-  health: 'health',
-  finance: 'finance',
-  other: 'other'
+exports.BodyType = exports.$Enums.BodyType = {
+  Sedan: 'Sedan',
+  SUV: 'SUV',
+  Truck: 'Truck',
+  Coupe: 'Coupe',
+  Van: 'Van',
+  Hatchback: 'Hatchback'
 };
 
-exports.Status = exports.$Enums.Status = {
+exports.FuelType = exports.$Enums.FuelType = {
+  Petrol: 'Petrol',
+  Diesel: 'Diesel',
+  Electric: 'Electric',
+  Hybrid: 'Hybrid'
+};
+
+exports.TransmissionType = exports.$Enums.TransmissionType = {
+  Automatic: 'Automatic',
+  Manual: 'Manual'
+};
+
+exports.District = exports.$Enums.District = {
+  Colombo: 'Colombo',
+  Gampaha: 'Gampaha',
+  Kandy: 'Kandy',
+  Galle: 'Galle',
+  Jaffna: 'Jaffna',
+  Trincomalee: 'Trincomalee',
+  Anuradhapura: 'Anuradhapura',
+  Kurunegala: 'Kurunegala'
+};
+
+exports.ListingStatus = exports.$Enums.ListingStatus = {
   active: 'active',
-  ban: 'ban',
-  sold: 'sold',
-  deleted: 'deleted',
-  inactive: 'inactive'
+  inactive: 'inactive',
+  rented: 'rented'
+};
+
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  active: 'active',
+  ending_soon: 'ending_soon',
+  completed: 'completed'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
   Listing: 'Listing',
+  Order: 'Order',
   Chat: 'Chat',
-  Message: 'Message',
-  PlatformMessage: 'PlatformMessage',
-  Credential: 'Credential',
-  Transaction: 'Transaction',
-  Withdrawal: 'Withdrawal'
+  Message: 'Message'
 };
 
 /**
