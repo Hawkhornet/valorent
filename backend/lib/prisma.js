@@ -1,12 +1,22 @@
 import { PrismaClient } from '../src/generated/prisma/index.js'
-import { neon } from '@neondatabase/serverless'
 import { PrismaNeon } from '@prisma/adapter-neon'
+import { neonConfig } from '@neondatabase/serverless'
+import ws from 'ws'
+import 'dotenv/config'
 
-const sql = neon(process.env.DATABASE_URL)
-const adapter = new PrismaNeon(sql)
+neonConfig.webSocketConstructor = ws
 
-const prisma = globalThis.prisma ?? new PrismaClient({ adapter })
+const connectionString = process.env.DATABASE_URL
 
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma
+if (!connectionString) {
+  throw new Error('DATABASE_URL is not set.')
+}
+
+const adapter = new PrismaNeon({ connectionString })
+
+const globalForPrisma = globalThis
+const prisma = globalForPrisma.prisma || new PrismaClient({ adapter })
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
 export default prisma

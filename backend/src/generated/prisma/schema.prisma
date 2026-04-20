@@ -2,9 +2,8 @@
 // Vehicle Rental Marketplace — Neon (PostgreSQL) + Prisma
 
 generator client {
-  provider        = "prisma-client-js"
-  output          = "../src/generated/prisma"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
