@@ -182,8 +182,8 @@ exports.Prisma.OrderScalarFieldEnum = {
 exports.Prisma.ChatScalarFieldEnum = {
   id: 'id',
   listingId: 'listingId',
-  userId: 'userId',
-  ownerId: 'ownerId',
+  chatUserId: 'chatUserId',
+  ownerUserId: 'ownerUserId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   active: 'active',
@@ -195,8 +195,8 @@ exports.Prisma.ChatScalarFieldEnum = {
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
   chatId: 'chatId',
-  senderId: 'senderId',
   message: 'message',
+  senderId: 'senderId',
   createdAt: 'createdAt'
 };
 
@@ -265,7 +265,8 @@ exports.District = exports.$Enums.District = {
 exports.ListingStatus = exports.$Enums.ListingStatus = {
   active: 'active',
   inactive: 'inactive',
-  rented: 'rented'
+  rented: 'rented',
+  deleted: 'deleted'
 };
 
 exports.OrderStatus = exports.$Enums.OrderStatus = {

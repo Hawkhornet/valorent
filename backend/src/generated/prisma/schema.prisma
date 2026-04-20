@@ -66,6 +66,7 @@ enum ListingStatus {
   active
   inactive
   rented
+  deleted
 }
 
 enum OrderStatus {
@@ -86,10 +87,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  listings Listing[]
-  orders   Order[]
-  chats    Chat[]
-  messages Message[]
+  listings      Listing[]
+  orders        Order[]
+  ownerChats    Chat[]    @relation("OwnerChats")
+  chatUserChats Chat[]    @relation("ChatUserChats")
 }
 
 // ─────────────────────────────────────────────
@@ -162,29 +163,29 @@ model Order {
 // ─────────────────────────────────────────────
 
 model Chat {
-  id                  String   @id @default(cuid())
+  id                  String    @id @default(cuid())
   listingId           String
-  userId              String // renter
-  ownerId             String // listing owner
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  active              Boolean  @default(true)
-  lastMessage         String   @default("")
-  isLastMessageRead   Boolean  @default(true)
-  lastMessageSenderId String   @default("")
+  chatUserId          String // renter
+  ownerUserId         String // listing owner
+  messages            Message[]
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  active              Boolean   @default(true)
+  lastMessage         String    @default("")
+  isLastMessageRead   Boolean   @default(true)
+  lastMessageSenderId String    @default("")
 
-  listing  Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  messages Message[]
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  ownerUser User    @relation("OwnerChats", fields: [ownerUserId], references: [id])
+  chatUser  User    @relation("ChatUserChats", fields: [chatUserId], references: [id])
 }
 
 model Message {
   id        String   @id @default(cuid())
   chatId    String
-  senderId  String
   message   String
+  senderId  String
   createdAt DateTime @default(now())
 
-  chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
 }
