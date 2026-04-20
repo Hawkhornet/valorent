@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@clerk/express": "^2.1.0",
+    "@imagekit/nodejs": "^7.5.0",
     "@neondatabase/serverless": "^1.1.0",
     "@prisma/adapter-neon": "^7.7.0",
     "@prisma/client": "^7.7.0",
