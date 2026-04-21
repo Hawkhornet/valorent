@@ -22,7 +22,7 @@ enum Make {
   Suzuki
   Ford
   BMW
-  Mercedes_Benz @map("Mercedes-Benz")
+  Mercedes
   Audi
   Tata
   Kia

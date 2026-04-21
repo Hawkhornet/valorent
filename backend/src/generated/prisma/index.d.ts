@@ -56,7 +56,7 @@ export namespace $Enums {
   Suzuki: 'Suzuki',
   Ford: 'Ford',
   BMW: 'BMW',
-  Mercedes_Benz: 'Mercedes_Benz',
+  Mercedes: 'Mercedes',
   Audi: 'Audi',
   Tata: 'Tata',
   Kia: 'Kia',
