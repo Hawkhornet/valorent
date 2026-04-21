@@ -50,7 +50,7 @@ const ManageListing = () => {
   const district = ["Colombo", "Gampaha", "Kandy", "Galle", "Jaffna", "Trincomalee"
     , "Anuradhapura", "Kurunegala"];
 
-  const make = ["Toyota", "Honda", "BYD", "Nissan", "Suzuki", "Ford", "BMW", "Mercedes-Benz", "Audi"
+  const make = ["Toyota", "Honda", "BYD", "Nissan", "Suzuki", "Ford", "BMW", "Mercedes", "Audi"
     , "Tata", "Kia", "Tesla", "Volkswagen"];
   
   const transmission_type = ["Automatic", "Manual"];

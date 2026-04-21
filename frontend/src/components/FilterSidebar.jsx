@@ -58,7 +58,7 @@ const FilterSidebar = ({showFilterPhone, setShowFilterPhone, filters, setFilters
         {value: 'suzuki', label: 'Suzuki'},
         {value: 'ford', label: 'Ford'},
         {value: 'bmw', label: 'BMW'},
-        {value: 'mercedes-benz', label: 'Mercedes-Benz'},
+        {value: 'mercedes', label: 'Mercedes'},
         {value: 'audi', label: 'Audi'},
         {value: 'tata', label: 'Tata'},
         {value: 'kia', label: 'Kia'},
