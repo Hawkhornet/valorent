@@ -4,13 +4,16 @@ import { dummyChats } from '../assets/assets'
 import { Loader2Icon, SendIcon, XIcon } from 'lucide-react'
 import { clearChat } from '../app/features/chatSlice'
 import {format, set} from 'date-fns'
+import { useAuth, useUser } from '@clerk/react'
+import api from '../configs/axios'
+import toast from 'react-hot-toast'
 
 const ChatBox = () => {
 
     const {listing, isOpen, chatId} = useSelector((state) => state.chat)
     const dispatch = useDispatch();
-
-    const user = {id: 'user_2'}
+    const { getToken } = useAuth()
+    const {user} = useUser()
 
     const [chat, setChat] = React.useState(null)
     const [messages, setMessages] = React.useState([])
@@ -19,18 +22,25 @@ const ChatBox = () => {
     const [isSending, setIsSending] = React.useState(false)
 
     const fetchChat = async () => {
-        const foundChats = {
-            ...dummyChats[0],
-            listing: listing
+        try {
+            const token = await getToken()
+            const {data} = await api.post('/api/chat', {listingId: listing.id, chatId}, {headers: { Authorization: `Bearer ${token}` }})
+            setChat(data?.chat)
+            setMessages(data?.chat?.messages || [])
+            setIsLoading(false)
+        } catch (error) {
+            toast.error(error?.response?.data?.message || error?.message);
+            console.log(error);
         }
-        setChat(dummyChats[0]);
-        setMessages(dummyChats[0].messages);
-        setIsLoading(false);
     }
 
     useEffect(() => {
         if(listing){
             fetchChat();
+            const interval = setInterval(() =>{
+                fetchChat();
+            }, 3000)
+            return ()=> clearInterval(interval)
         }
     }, [listing])
 
@@ -52,9 +62,130 @@ const ChatBox = () => {
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if(!newMessages.trim() || isSending) return;
-        setMessages([...messages, {id: Date.now(), chatId: chat.id, sender_id: user.id, message: newMessages, createdAt: new Date()}])
-        setNewMessages("");
+
+        try {
+            setIsSending(true);
+            const token = await getToken();
+            const {data} = await api.post('/api/chat/send-message', {chatId: chat.id, message: newMessages}, {headers: { Authorization: `Bearer ${token}` }})
+            setMessages([...messages, data.newMessage])
+            setNewMessages("")
+            setIsSending(false)
+        } catch (error) {
+            toast.error(error?.response?.data?.message || error?.message);
+            console.log(error);
+            setIsSending(false)
+        }
     }
+
+    const handleRentalResponse = async (rentalRequestId, response) => {
+    try {
+        toast.loading("Processing...")
+        const token = await getToken()
+        await api.post('/api/chat/rental-request/respond',
+            { rentalRequestId, response },
+            { headers: { Authorization: `Bearer ${token}` }}
+        )
+        toast.dismissAll()
+        toast.success(`Rental request ${response}`)
+        fetchChat()
+    } catch (error) {
+        toast.dismissAll()
+        toast.error(error?.response?.data?.message || error.message)
+    }
+}
+
+const handleCancelRequest = async (rentalRequestId) => {
+    try {
+        toast.loading("Cancelling request...")
+        const token = await getToken()
+        await api.post('/api/chat/rental-request/cancel',
+            { rentalRequestId },
+            { headers: { Authorization: `Bearer ${token}` }}
+        )
+        toast.dismissAll()
+        toast.success("Rental request cancelled")
+        fetchChat()
+    } catch (error) {
+        toast.dismissAll()
+        toast.error(error?.response?.data?.message || error.message)
+    }
+}
+
+const renderMessage = (message) => {
+    const isMe = message.senderId === user.id
+
+    if (message.type === 'rental_request') {
+        const details = JSON.parse(message.message)
+        return (
+            <div className='bg-indigo-50 border border-indigo-200 rounded-lg p-4 max-w-sm'>
+                <p className='font-semibold text-indigo-800 mb-2'>🚗 Rental Request</p>
+                <p className='text-sm text-gray-600'>From: {format(new Date(details.rentalStart), 'MMM d, yyyy')}</p>
+                <p className='text-sm text-gray-600'>To: {format(new Date(details.rentalEnd), 'MMM d, yyyy')}</p>
+                <p className='text-sm text-gray-600'>
+                    {details.days} days × රු{details.pricePerDay.toLocaleString()} = <span className='font-bold'>රු{details.totalPrice.toLocaleString()}</span>
+                </p>
+
+                {/* Only show accept/deny to owner if still pending */}
+                {!isMe && details.status === 'pending' && (
+                    <div className='flex gap-2 mt-3'>
+                        <button onClick={() => handleRentalResponse(details.rentalRequestId, 'accepted')}
+                            className='flex-1 bg-green-600 text-white py-1.5 rounded text-sm hover:bg-green-700'>
+                            Accept
+                        </button>
+                        <button onClick={() => handleRentalResponse(details.rentalRequestId, 'denied')}
+                            className='flex-1 bg-red-600 text-white py-1.5 rounded text-sm hover:bg-red-700'>
+                            Deny
+                        </button>
+                    </div>
+                )}
+
+                {/* Only show cancel to renter if still pending */}
+                {isMe && details.status === 'pending' && (
+                    <button onClick={() => handleCancelRequest(details.rentalRequestId)}
+                        className='w-full mt-3 border border-red-300 text-red-600 py-1.5 rounded text-sm hover:bg-red-50'>
+                        Cancel Request
+                    </button>
+                )}
+
+                {/* Show status badges when no longer pending */}
+                {details.status === 'cancelled' && (
+                    <p className='text-xs text-gray-400 mt-2 text-center'>Request cancelled</p>
+                )}
+                {details.status === 'accepted' && (
+                    <p className='text-xs text-green-600 mt-2 text-center'>✅ Request accepted</p>
+                )}
+                {details.status === 'denied' && (
+                    <p className='text-xs text-red-500 mt-2 text-center'>❌ Request denied</p>
+                )}
+            </div>
+        )
+    }
+
+    if (message.type === 'rental_accepted') {
+        return (
+            <div className='bg-green-50 border border-green-200 rounded-lg p-3 text-green-800 text-sm'>
+                ✅ {message.message}
+            </div>
+        )
+    }
+
+    if (message.type === 'rental_denied') {
+        return (
+            <div className='bg-red-50 border border-red-200 rounded-lg p-3 text-red-800 text-sm'>
+                ❌ {message.message}
+            </div>
+        )
+    }
+
+    return (
+        <>
+            <p className='text-sm break-words whitespace-pre-wrap'>{message.message}</p>
+            <p className={`text-[10px] mt-1 ${isMe ? "text-red-200" : "text-gray-400"}`}>
+                {format(new Date(message.createdAt), "MMM dd 'at' h:mm a")}
+            </p>
+        </>
+    )
+}
 
     if (!isOpen || !listing) return null;
   return (
@@ -85,23 +216,36 @@ const ChatBox = () => {
             </div>
         </div>
     ) : (
-        messages.map((message) => (
-            <div key={message.id} className={`flex ${message.sender_id === user.id ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[70%] rounded-lg p-3 pb-1 ${message.sender_id === user.id ? 'bg-orange-500 text-white' : 'bg-white text-gray-800'}`}>
-                    <p className='text-sm break-words whitespace-pre-wrap'>{message.message}</p>
-                    <p className={`text-[10px] mt-1 ${message.sender_id === user.id ? "text-red-200" : "text-gray-400"}`}>
-                        {format(new Date(message.createdAt), "MMM dd 'at' h:mm a")}
-                    </p>
-                </div>
+        messages.map((message) => {
+    const isMe = message.senderId === user.id
+    const isSpecial = ['rental_request', 'rental_accepted', 'rental_denied'].includes(message.type)
+
+    return (
+        <div key={message.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-[70%] rounded-lg p-3 pb-1 ${
+                isSpecial
+                    ? '' // special messages handle their own styling
+                    : isMe
+                        ? 'bg-orange-500 text-white'
+                        : 'bg-white text-gray-800'
+            }`}>
+                {renderMessage(message)}
             </div>
-        ))
+        </div>
+    )
+})
     )}
     <div ref={messagesEndRef} />
         </div>
         
         {/* Input Area */}
-{chat?.listing?.status === "active" ? (
+{chat ? (
     <form onSubmit={handleSendMessage} className='p-4 bg-white border-t border-gray-200 rounded-b-lg'>
+        {chat.listing?.status !== "active" && (
+            <p className='text-xs text-amber-600 text-center mb-2'>
+                This listing is {chat.listing?.status} — you can still message the owner.
+            </p>
+        )}
         <div className='flex items-end space-x-2'>
 
             <textarea

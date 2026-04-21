@@ -1,36 +1,34 @@
 import React from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CheckCircle, DollarSign, Edit, Eye, EyeIcon, EyeOffIcon, LockIcon, Plus, StarIcon, TrashIcon, TrendingUp, XCircle } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import { dummyOrders, vehicleIcons } from '../assets/assets';
 import Footer from '../components/Footer';
+import { useAuth } from '@clerk/react';
+import api from '../configs/axios';
+import { getAllPublicListing, getAllUserListing } from '../app/features/listingSlice';
+import toast from 'react-hot-toast'
+
+
 const MyListings = () => {
-  const {userListings, balance} = useSelector((state)=>state.listing)
   const currency = import.meta.env.VITE_CURRENCY || 'රු';
   const navigate = useNavigate()
+  const { getToken } = useAuth()
+  const dispatch = useDispatch()
 
-  const totalValue = dummyOrders
-    .filter((order) => order.status === 'active' || order.status === 'completed')
-    .reduce((sum, order) => {
-        const days = Math.round(
-            (new Date(order.rental_end) - new Date(order.rental_start)) / (1000 * 60 * 60 * 24)
-        )
-        return sum + order.price_per_day * days
-    }, 0)
+  const { userListings, totalEarnings } = useSelector((state) => state.listing)
   const activeListings = userListings.filter((listing)=>listing.status === 'active').length;
-  const soldListings = userListings.filter((listing)=>listing.status === 'rented').length;
+  const rentedListings = userListings.filter((listing)=>listing.status === 'rented').length;
 
   const getStatusIcon = (status) => {
     switch (status) {
       case "active":
         return <CheckCircle className='size-3.5'/>;
-      case "ban":
-        return <CheckCircle className='size-3.5'/>;
       case "rented":
         return <DollarSign className='size-3.5'/>;
       case "inactive":
-        return <XCircle className='size-3.5'/>;  
+        return <XCircle className='size-3.5'/>;
       default:
         return <Clock className='size-3.5'/>;
     }
@@ -40,25 +38,47 @@ const MyListings = () => {
     switch (status) {
       case "active":
         return 'text-green-800';
-      case "ban":
+      case "rented":
         return 'text-red-800';
-      case "sold":
-        return 'text-indigo-800';
       case "inactive":
-        return 'text-gray-800';  
+        return 'text-gray-800';
       default:
         return 'text-gray-800';
     }
   }
 
-  const toggleStatus = async (listing) => {
+  const toggleStatus = async (listingId) => {
+    try{
+      toast.loading('Updating listing status...')
+      const token = await getToken();
+      const { data } = await api.put(`/api/listing/${listingId}/status`, {}, { headers: { Authorization: `Bearer ${token}` }})
+      dispatch(getAllUserListing({getToken}))
+      dispatch(getAllPublicListing())
+      toast.dismissAll();
+      toast.success(data.message);
 
+    }catch(error){
+      toast.dismissAll();
+      toast.error(error?.response?.data?.message || error.message);
+    }
   }
-  const deleteListing = async (listing) => {
-    
-  }
-  const markAsFeatured = async (listing) => {
-    
+  const deleteListing = async (listingId) => {
+    try{
+      const confirm = window.confirm('Are you sure you want to delete this listing?')
+      if(!confirm) return;
+
+      toast.loading('Deleting listing...')
+      const token = await getToken();
+      const { data } = await api.delete(`/api/listing/${listingId}`, { headers: { Authorization: `Bearer ${token}` }})
+      dispatch(getAllUserListing({getToken}))
+      dispatch(getAllPublicListing())
+      toast.dismissAll();
+      toast.success(data.message);
+      
+    }catch(error){
+      toast.dismissAll();
+      toast.error(error?.response?.data?.message || error.message);
+    }
   }
 
 
@@ -84,8 +104,13 @@ const MyListings = () => {
       <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
         <StatCard title='Total Listings' value={userListings.length} icon={<Eye className='size-6 text-indigo-600' />} color='indigo' />
         <StatCard title='Active Listings' value={activeListings} icon={<CheckCircle className='size-6 text-green-600' />}color='green' />
-        <StatCard title='Rented' value={soldListings} icon={<TrendingUp className='size-6 text-red-600' />}color='red' />
-        <StatCard title='Rental Earnings' value={`${currency}${totalValue.toFixed(2)}`} icon={<DollarSign className='size-6 text-blue-600' />}color='blue' />
+        <StatCard title='Rented' value={rentedListings} icon={<TrendingUp className='size-6 text-red-600' />}color='red' />
+        <StatCard 
+    title='Rental Earnings' 
+    value={`${currency}${totalEarnings.toFixed(2)}`} 
+    icon={<DollarSign className='size-6 text-blue-600' />} 
+    color='blue' 
+/>
       </div>
       {/*Listings Table*/}
       {userListings.length === 0 ?
@@ -118,7 +143,7 @@ const MyListings = () => {
                         {getStatusIcon(listing.status)} {listing.status}
                       </span>
                     </div>
-                    <p className='text-gray-500 text-sm'>
+                    <p className='text-gray-500 text-md'>
                       {listing.exterior_color} - <span className='capitalize'>{listing.body_type}</span>
                     </p>
                   </div>
@@ -139,7 +164,7 @@ const MyListings = () => {
                     <button onClick={()=>navigate(`/edit-listing/${listing.id}`)} className='p-2 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-indigo-600'>
                       <Edit className='size-4'/>
                     </button>
-                    <button onClick={()=>toggleStatus} className='p-2 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-purple-600'>
+                    <button onClick={()=>toggleStatus(listing.id)} className='p-2 border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-purple-600'>
                       {listing.status === 'active' ? <EyeOffIcon className='size-4'/> : <EyeIcon className='size-4'/>}
                     </button>
                   </div>

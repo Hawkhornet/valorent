@@ -7,6 +7,9 @@ import fs from "fs"
 import prisma from "../lib/prisma.js";
 
 export const addListing = async (req, res) =>{
+    console.log("addListing hit")
+    console.log("files:", req.files)
+    console.log("body:", req.body)
     try {
         const {userId} = await req.auth();
 
@@ -35,12 +38,14 @@ export const addListing = async (req, res) =>{
         vehicleDetails.deposit            = vehicleDetails.deposit ? parseFloat(vehicleDetails.deposit) : null
 
         const uploadImages = req.files.map(async (file) => {
+            console.log("uploading file:", file.path)
             const response = await imagekit.files.upload({
                 file: fs.createReadStream(file.path),
                 fileName: `${Date.now()}.png`,
                 folder: "valorent",
-                transformation: {pre: "w-1280, h-auto"}
+                transformation: {pre: "w-1280, ar-true"}
                 });
+            console.log("upload response:", response)
             return response.url
         })
 
@@ -75,7 +80,7 @@ export const getAllPublicListing = async (req, res) =>{
         if(!listings || listings.length === 0){
             return res.json({listings: [] });
         }
-        return res.join({listings});
+        return res.json({listings});
 
     } catch (error) {
         console.log(error);
@@ -86,22 +91,30 @@ export const getAllPublicListing = async (req, res) =>{
 // Controller for getting all user listing
 
 export const getAllUserListing = async (req, res) => {
-    try{
+    try {
         const { userId } = await req.auth();
-        // get all listings except deleted
+
         const listings = await prisma.listing.findMany({
-            where: {ownerId: userId, status: { not: "deleted" }},
+            where: { ownerId: userId, status: { not: "deleted" } },
             orderBy: { createdAt: "desc" },
         })
 
-        const user = await prisma.user.findUnique({
-            where: {id: userId}
+        const orders = await prisma.order.findMany({
+            where: {
+                ownerId: userId,
+                isPaid: true,
+                status: { in: ['active', 'completed'] }
+            }
         })
 
-        if(!listings || listings.length === 0){
-            return res.json({ listings: [] })
-        }
-    }catch (error) {
+        const totalEarnings = orders.reduce((sum, order) => {
+            const days = Math.ceil((new Date(order.rental_end) - new Date(order.rental_start)) / (1000 * 60 * 60 * 24))
+            return sum + (order.price_per_day * days)
+        }, 0)
+
+        return res.json({ listings, totalEarnings })
+
+    } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.code || error.message });
     }
@@ -203,8 +216,8 @@ export const toggleStatus = async (req, res) => {
                 where: { id, ownerId: userId },
                 data: {status: listing.status === "active" ? "inactive" : "active"}
             })
-        }else if(listing.status === "rented"){
-            return res.status(400).json({ message: "Your listing is being rented" });
+        }else if(listing.status === "inactive"){
+            return res.status(400).json({ message: "Your listing is inactive" });
         }
 
         return res.json({ message: "Listing status updated successfully", listing });
@@ -218,23 +231,28 @@ export const toggleStatus = async (req, res) => {
 export const deleteUserListing = async (req, res) => {
     try {
         const { userId } = await req.auth();
-        const {listingId} = req.params;
+        const { listingId } = req.params;
 
         const listing = await prisma.listing.findFirst({
             where: { id: listingId, ownerId: userId },
-            include: {owner: true},
         })
 
         if (!listing) {
             return res.status(404).json({ message: "Listing not found" });
         }
 
-        if (listing.status === "rented"){
-            return res.status(404).json({ message: "Rented listing can't be deleted" });
+        if (listing.status === "rented") {
+            return res.status(400).json({ message: "Rented listing can't be deleted" });
         }
-        return res.json({ message: "Listing Deleted Successfully"});
 
-    }catch (error) {
+        await prisma.listing.update({
+            where: { id: listingId },
+            data: { status: "deleted" }
+        })
+
+        return res.json({ message: "Listing Deleted Successfully" });
+
+    } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.code || error.message });
     }
@@ -257,6 +275,7 @@ export const getAllUserOrders = async (req, res) => {
                                 name: true,
                                 email: true,
                                 image: true,
+                                createdAt: true,
                             }
                         }
                     }
@@ -275,7 +294,7 @@ export const getAllUserOrders = async (req, res) => {
                 const chat = await prisma.chat.findFirst({
                     where: {
                         listingId: order.listingId,
-                        userId,
+                        chatUserId: userId,
                     },
                     include: {
                         messages: {
@@ -300,7 +319,29 @@ export const getAllUserOrders = async (req, res) => {
 
 export const rentVehicle = async (req, res) => {
     try{
+        const { userId } = await req.auth();
+        const { listingId } = req.params;
 
+        const listing = await prisma.listing.findFirst({
+            where: {id: listingId, status: 'active'}
+        })
+
+        if(!listing){
+            return res.status(404).json({ message: "Listing not found or not active" });
+        }
+
+        if (listing.ownerId === userId){
+            return res.status(400).json({ message: "You can't purchase your own listing" });
+        }
+
+        const transaction = await prisma.order.create({
+            data: {
+                listingId,
+                ownerId: listing.ownerId,
+                userId,
+                amount: listing.price_per_day
+            }
+        })
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: error.code || error.message })
