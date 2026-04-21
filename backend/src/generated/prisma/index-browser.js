@@ -197,7 +197,21 @@ exports.Prisma.MessageScalarFieldEnum = {
   chatId: 'chatId',
   message: 'message',
   senderId: 'senderId',
+  type: 'type',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.RentalRequestScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  listingId: 'listingId',
+  renterId: 'renterId',
+  ownerId: 'ownerId',
+  status: 'status',
+  rentalStart: 'rentalStart',
+  rentalEnd: 'rentalEnd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -275,12 +289,26 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   completed: 'completed'
 };
 
+exports.MessageType = exports.$Enums.MessageType = {
+  text: 'text',
+  rental_request: 'rental_request',
+  rental_accepted: 'rental_accepted',
+  rental_denied: 'rental_denied'
+};
+
+exports.RentalRequestStatus = exports.$Enums.RentalRequestStatus = {
+  pending: 'pending',
+  accepted: 'accepted',
+  denied: 'denied'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Listing: 'Listing',
   Order: 'Order',
   Chat: 'Chat',
-  Message: 'Message'
+  Message: 'Message',
+  RentalRequest: 'RentalRequest'
 };
 
 /**

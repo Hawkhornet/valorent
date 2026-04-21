@@ -4,6 +4,9 @@ import { dummyChats } from '../assets/assets';
 import {format, isToday, isYesterday, parseISO} from 'date-fns';
 import { setChat } from '../app/features/chatSlice';
 import { useDispatch } from 'react-redux';
+import { useAuth, useUser } from '@clerk/react';
+import api from '../configs/axios';
+import toast from 'react-hot-toast';
 
 
 const Messages = () => {
@@ -11,7 +14,8 @@ const Messages = () => {
 
   const dispatch = useDispatch()
 
-  const user = { id: 'user_1' }
+  const {user, isLoaded} = useUser()
+  const { getToken } = useAuth()
 
 
   const [chats, setChats] = useState([])
@@ -37,7 +41,7 @@ const Messages = () => {
   const filteredChats = useMemo(()=>{
     const query = searchQuery.toLowerCase()
     return chats.filter((chat) => {
-      const chatUser = chat.chatUserid === user?.id ? chat?.ownerUser : chat?. chatUser;
+      const chatUser = chat.chatUserId === user?.id ? chat?.ownerUser : chat?. chatUser;
 
       return chat.listing?.title?.toLowerCase().includes(query) || chatUser?.name?.toLowerCase().includes(query);
 
@@ -52,20 +56,31 @@ const Messages = () => {
   
 
   const fetchUserChats = async () => {
-    setChats(dummyChats)
-    setLoading(false)
+    try {
+      const token = await getToken();
+      const { data } = await api.get('/api/chat/user', { headers: { Authorization: `Bearer ${token}` }})
+      setChats(data.chats)
+      setLoading(false)
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+      console.log(error);
+      setLoading(false);
+    }
   }
 
   
 
   useEffect(() => {
-    fetchUserChats()
+    if(user && isLoaded){
+      fetchUserChats()
     const interval = setInterval(() => {
       fetchUserChats()
     }, 10 * 1000)
 
     return () => clearInterval(interval)
-  }, [])
+    }
+    
+  }, [user, isLoaded])
 
   return (
     <div className='mx-auto min-h-screen px-6 md:px-16 lg:px-24 xl:px-32'>
@@ -123,7 +138,7 @@ const Messages = () => {
 
                       </div>
                       <p className='text-sm text-gray-600 truncate mb-1'>{chatUser?.name}</p>
-                      <p className={`text-sm truncate ${!chat.isLastMessageRead && chat.lastMessageSenderId !== user?.id ? 'text-indigo-600 font-medium' : "text-gray-500" }`}>{chat.lastmessage || 'No messages yet'}</p>
+                      <p className={`text-sm truncate ${!chat.isLastMessageRead && chat.lastMessageSenderId !== user?.id ? 'text-indigo-600 font-medium' : "text-gray-500" }`}>{chat.lastMessage || 'No messages yet'}</p>
 
                     </div>
                   </div>

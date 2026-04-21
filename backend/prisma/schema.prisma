@@ -57,6 +57,12 @@ enum FuelType {
   Hybrid
 }
 
+enum RentalRequestStatus {
+  pending
+  accepted
+  denied
+}
+
 enum TransmissionType {
   Automatic
   Manual
@@ -75,6 +81,13 @@ enum OrderStatus {
   completed
 }
 
+enum MessageType {
+  text
+  rental_request
+  rental_accepted
+  rental_denied
+}
+
 // ─────────────────────────────────────────────
 // User
 // ─────────────────────────────────────────────
@@ -91,6 +104,7 @@ model User {
   orders    Order[]
   ownerChats    Chat[]       @relation("OwnerChats")
   chatUserChats Chat[]       @relation("ChatUserChats")
+  messages  Message[]
 }
 
 // ─────────────────────────────────────────────
@@ -135,6 +149,7 @@ model Listing {
   owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   orders   Order[]
   chats    Chat[]
+  rentalRequests RentalRequest[]
 }
 
 // ─────────────────────────────────────────────
@@ -178,14 +193,34 @@ model Chat {
   listing  Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   ownerUser User    @relation("OwnerChats", fields: [ownerUserId], references: [id])
   chatUser  User    @relation("ChatUserChats", fields: [chatUserId], references: [id])
+  rentalRequests RentalRequest[]
 }
 
 model Message {
-  id        String   @id @default(cuid())
+  id        String      @id @default(cuid())
   chatId    String
   message   String
   senderId  String
-  createdAt DateTime @default(now())
+  type      MessageType @default(text)
+  createdAt DateTime    @default(now())
 
-  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chat Chat @relation(fields: [chatId], references: [id])
+  sender User @relation(fields: [senderId], references: [id])
 }
+model RentalRequest {
+  id        String   @id @default(cuid())
+  chatId    String
+  listingId String
+  renterId  String
+  ownerId   String
+  status    RentalRequestStatus @default(pending)
+  rentalStart DateTime
+  rentalEnd   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  chat    Chat    @relation(fields: [chatId], references: [id])
+  listing Listing @relation(fields: [listingId], references: [id])
+}
+
+

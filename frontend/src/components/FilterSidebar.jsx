@@ -177,8 +177,8 @@ const FilterSidebar = ({showFilterPhone, setShowFilterPhone, filters, setFilters
                 onChange={(e) => onFiltersChange({...filters, transmission_type: e.target.value || null})}
                 className='w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-700 outline-red-500'>
                     <option value=''> Both Types </option>
-                    <option value='automatic'> Automatic </option>
-                    <option value='manual'> Manual </option>
+                    <option value='Automatic'> Automatic </option>
+                    <option value='Manual'> Manual </option>
                 </select>
             )}
         </div>

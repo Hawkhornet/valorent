@@ -6,6 +6,8 @@ import { addListing, deleteUserListing, getAllPublicListing, getAllUserListing, 
 
 const listingRouter = express.Router();
 
+
+
 listingRouter.post('/', upload.array("images", 5), protect , addListing)
 listingRouter.put('/', upload.array("images", 5), protect , updateListing)
 listingRouter.get('/public', getAllPublicListing)

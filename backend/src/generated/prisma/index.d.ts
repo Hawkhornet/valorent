@@ -38,6 +38,11 @@ export type Chat = $Result.DefaultSelection<Prisma.$ChatPayload>
  * 
  */
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
+/**
+ * Model RentalRequest
+ * 
+ */
+export type RentalRequest = $Result.DefaultSelection<Prisma.$RentalRequestPayload>
 
 /**
  * Enums
@@ -98,6 +103,15 @@ export const FuelType: {
 export type FuelType = (typeof FuelType)[keyof typeof FuelType]
 
 
+export const RentalRequestStatus: {
+  pending: 'pending',
+  accepted: 'accepted',
+  denied: 'denied'
+};
+
+export type RentalRequestStatus = (typeof RentalRequestStatus)[keyof typeof RentalRequestStatus]
+
+
 export const TransmissionType: {
   Automatic: 'Automatic',
   Manual: 'Manual'
@@ -124,6 +138,16 @@ export const OrderStatus: {
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
 
+
+export const MessageType: {
+  text: 'text',
+  rental_request: 'rental_request',
+  rental_accepted: 'rental_accepted',
+  rental_denied: 'rental_denied'
+};
+
+export type MessageType = (typeof MessageType)[keyof typeof MessageType]
+
 }
 
 export type Make = $Enums.Make
@@ -142,6 +166,10 @@ export type FuelType = $Enums.FuelType
 
 export const FuelType: typeof $Enums.FuelType
 
+export type RentalRequestStatus = $Enums.RentalRequestStatus
+
+export const RentalRequestStatus: typeof $Enums.RentalRequestStatus
+
 export type TransmissionType = $Enums.TransmissionType
 
 export const TransmissionType: typeof $Enums.TransmissionType
@@ -153,6 +181,10 @@ export const ListingStatus: typeof $Enums.ListingStatus
 export type OrderStatus = $Enums.OrderStatus
 
 export const OrderStatus: typeof $Enums.OrderStatus
+
+export type MessageType = $Enums.MessageType
+
+export const MessageType: typeof $Enums.MessageType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -324,6 +356,16 @@ export class PrismaClient<
     * ```
     */
   get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.rentalRequest`: Exposes CRUD operations for the **RentalRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RentalRequests
+    * const rentalRequests = await prisma.rentalRequest.findMany()
+    * ```
+    */
+  get rentalRequest(): Prisma.RentalRequestDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -762,7 +804,8 @@ export namespace Prisma {
     Listing: 'Listing',
     Order: 'Order',
     Chat: 'Chat',
-    Message: 'Message'
+    Message: 'Message',
+    RentalRequest: 'RentalRequest'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -778,7 +821,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "listing" | "order" | "chat" | "message"
+      modelProps: "user" | "listing" | "order" | "chat" | "message" | "rentalRequest"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1152,6 +1195,80 @@ export namespace Prisma {
           }
         }
       }
+      RentalRequest: {
+        payload: Prisma.$RentalRequestPayload<ExtArgs>
+        fields: Prisma.RentalRequestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RentalRequestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RentalRequestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>
+          }
+          findFirst: {
+            args: Prisma.RentalRequestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RentalRequestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>
+          }
+          findMany: {
+            args: Prisma.RentalRequestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>[]
+          }
+          create: {
+            args: Prisma.RentalRequestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>
+          }
+          createMany: {
+            args: Prisma.RentalRequestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RentalRequestCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>[]
+          }
+          delete: {
+            args: Prisma.RentalRequestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>
+          }
+          update: {
+            args: Prisma.RentalRequestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>
+          }
+          deleteMany: {
+            args: Prisma.RentalRequestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RentalRequestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RentalRequestUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>[]
+          }
+          upsert: {
+            args: Prisma.RentalRequestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RentalRequestPayload>
+          }
+          aggregate: {
+            args: Prisma.RentalRequestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRentalRequest>
+          }
+          groupBy: {
+            args: Prisma.RentalRequestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RentalRequestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RentalRequestCountArgs<ExtArgs>
+            result: $Utils.Optional<RentalRequestCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1265,6 +1382,7 @@ export namespace Prisma {
     order?: OrderOmit
     chat?: ChatOmit
     message?: MessageOmit
+    rentalRequest?: RentalRequestOmit
   }
 
   /* Types for Logging */
@@ -1349,6 +1467,7 @@ export namespace Prisma {
     orders: number
     ownerChats: number
     chatUserChats: number
+    messages: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1356,6 +1475,7 @@ export namespace Prisma {
     orders?: boolean | UserCountOutputTypeCountOrdersArgs
     ownerChats?: boolean | UserCountOutputTypeCountOwnerChatsArgs
     chatUserChats?: boolean | UserCountOutputTypeCountChatUserChatsArgs
+    messages?: boolean | UserCountOutputTypeCountMessagesArgs
   }
 
   // Custom InputTypes
@@ -1397,6 +1517,13 @@ export namespace Prisma {
     where?: ChatWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MessageWhereInput
+  }
+
 
   /**
    * Count Type ListingCountOutputType
@@ -1405,11 +1532,13 @@ export namespace Prisma {
   export type ListingCountOutputType = {
     orders: number
     chats: number
+    rentalRequests: number
   }
 
   export type ListingCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orders?: boolean | ListingCountOutputTypeCountOrdersArgs
     chats?: boolean | ListingCountOutputTypeCountChatsArgs
+    rentalRequests?: boolean | ListingCountOutputTypeCountRentalRequestsArgs
   }
 
   // Custom InputTypes
@@ -1437,6 +1566,13 @@ export namespace Prisma {
     where?: ChatWhereInput
   }
 
+  /**
+   * ListingCountOutputType without action
+   */
+  export type ListingCountOutputTypeCountRentalRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RentalRequestWhereInput
+  }
+
 
   /**
    * Count Type ChatCountOutputType
@@ -1444,10 +1580,12 @@ export namespace Prisma {
 
   export type ChatCountOutputType = {
     messages: number
+    rentalRequests: number
   }
 
   export type ChatCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     messages?: boolean | ChatCountOutputTypeCountMessagesArgs
+    rentalRequests?: boolean | ChatCountOutputTypeCountRentalRequestsArgs
   }
 
   // Custom InputTypes
@@ -1466,6 +1604,13 @@ export namespace Prisma {
    */
   export type ChatCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MessageWhereInput
+  }
+
+  /**
+   * ChatCountOutputType without action
+   */
+  export type ChatCountOutputTypeCountRentalRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RentalRequestWhereInput
   }
 
 
@@ -1649,6 +1794,7 @@ export namespace Prisma {
     orders?: boolean | User$ordersArgs<ExtArgs>
     ownerChats?: boolean | User$ownerChatsArgs<ExtArgs>
     chatUserChats?: boolean | User$chatUserChatsArgs<ExtArgs>
+    messages?: boolean | User$messagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1685,6 +1831,7 @@ export namespace Prisma {
     orders?: boolean | User$ordersArgs<ExtArgs>
     ownerChats?: boolean | User$ownerChatsArgs<ExtArgs>
     chatUserChats?: boolean | User$chatUserChatsArgs<ExtArgs>
+    messages?: boolean | User$messagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1697,6 +1844,7 @@ export namespace Prisma {
       orders: Prisma.$OrderPayload<ExtArgs>[]
       ownerChats: Prisma.$ChatPayload<ExtArgs>[]
       chatUserChats: Prisma.$ChatPayload<ExtArgs>[]
+      messages: Prisma.$MessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2103,6 +2251,7 @@ export namespace Prisma {
     orders<T extends User$ordersArgs<ExtArgs> = {}>(args?: Subset<T, User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ownerChats<T extends User$ownerChatsArgs<ExtArgs> = {}>(args?: Subset<T, User$ownerChatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chatUserChats<T extends User$chatUserChatsArgs<ExtArgs> = {}>(args?: Subset<T, User$chatUserChatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    messages<T extends User$messagesArgs<ExtArgs> = {}>(args?: Subset<T, User$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2627,6 +2776,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.messages
+   */
+  export type User$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    where?: MessageWhereInput
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    cursor?: MessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3114,6 +3287,7 @@ export namespace Prisma {
     owner?: boolean | UserDefaultArgs<ExtArgs>
     orders?: boolean | Listing$ordersArgs<ExtArgs>
     chats?: boolean | Listing$chatsArgs<ExtArgs>
+    rentalRequests?: boolean | Listing$rentalRequestsArgs<ExtArgs>
     _count?: boolean | ListingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["listing"]>
 
@@ -3232,6 +3406,7 @@ export namespace Prisma {
     owner?: boolean | UserDefaultArgs<ExtArgs>
     orders?: boolean | Listing$ordersArgs<ExtArgs>
     chats?: boolean | Listing$chatsArgs<ExtArgs>
+    rentalRequests?: boolean | Listing$rentalRequestsArgs<ExtArgs>
     _count?: boolean | ListingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ListingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3247,6 +3422,7 @@ export namespace Prisma {
       owner: Prisma.$UserPayload<ExtArgs>
       orders: Prisma.$OrderPayload<ExtArgs>[]
       chats: Prisma.$ChatPayload<ExtArgs>[]
+      rentalRequests: Prisma.$RentalRequestPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3679,6 +3855,7 @@ export namespace Prisma {
     owner<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     orders<T extends Listing$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Listing$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chats<T extends Listing$chatsArgs<ExtArgs> = {}>(args?: Subset<T, Listing$chatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    rentalRequests<T extends Listing$rentalRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Listing$rentalRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4187,6 +4364,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ChatScalarFieldEnum | ChatScalarFieldEnum[]
+  }
+
+  /**
+   * Listing.rentalRequests
+   */
+  export type Listing$rentalRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    where?: RentalRequestWhereInput
+    orderBy?: RentalRequestOrderByWithRelationInput | RentalRequestOrderByWithRelationInput[]
+    cursor?: RentalRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RentalRequestScalarFieldEnum | RentalRequestScalarFieldEnum[]
   }
 
   /**
@@ -5599,6 +5800,7 @@ export namespace Prisma {
     listing?: boolean | ListingDefaultArgs<ExtArgs>
     ownerUser?: boolean | UserDefaultArgs<ExtArgs>
     chatUser?: boolean | UserDefaultArgs<ExtArgs>
+    rentalRequests?: boolean | Chat$rentalRequestsArgs<ExtArgs>
     _count?: boolean | ChatCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chat"]>
 
@@ -5653,6 +5855,7 @@ export namespace Prisma {
     listing?: boolean | ListingDefaultArgs<ExtArgs>
     ownerUser?: boolean | UserDefaultArgs<ExtArgs>
     chatUser?: boolean | UserDefaultArgs<ExtArgs>
+    rentalRequests?: boolean | Chat$rentalRequestsArgs<ExtArgs>
     _count?: boolean | ChatCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ChatIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5673,6 +5876,7 @@ export namespace Prisma {
       listing: Prisma.$ListingPayload<ExtArgs>
       ownerUser: Prisma.$UserPayload<ExtArgs>
       chatUser: Prisma.$UserPayload<ExtArgs>
+      rentalRequests: Prisma.$RentalRequestPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6083,6 +6287,7 @@ export namespace Prisma {
     listing<T extends ListingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ListingDefaultArgs<ExtArgs>>): Prisma__ListingClient<$Result.GetResult<Prisma.$ListingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ownerUser<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     chatUser<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    rentalRequests<T extends Chat$rentalRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Chat$rentalRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6547,6 +6752,30 @@ export namespace Prisma {
   }
 
   /**
+   * Chat.rentalRequests
+   */
+  export type Chat$rentalRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    where?: RentalRequestWhereInput
+    orderBy?: RentalRequestOrderByWithRelationInput | RentalRequestOrderByWithRelationInput[]
+    cursor?: RentalRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RentalRequestScalarFieldEnum | RentalRequestScalarFieldEnum[]
+  }
+
+  /**
    * Chat without action
    */
   export type ChatDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6580,6 +6809,7 @@ export namespace Prisma {
     chatId: string | null
     message: string | null
     senderId: string | null
+    type: $Enums.MessageType | null
     createdAt: Date | null
   }
 
@@ -6588,6 +6818,7 @@ export namespace Prisma {
     chatId: string | null
     message: string | null
     senderId: string | null
+    type: $Enums.MessageType | null
     createdAt: Date | null
   }
 
@@ -6596,6 +6827,7 @@ export namespace Prisma {
     chatId: number
     message: number
     senderId: number
+    type: number
     createdAt: number
     _all: number
   }
@@ -6606,6 +6838,7 @@ export namespace Prisma {
     chatId?: true
     message?: true
     senderId?: true
+    type?: true
     createdAt?: true
   }
 
@@ -6614,6 +6847,7 @@ export namespace Prisma {
     chatId?: true
     message?: true
     senderId?: true
+    type?: true
     createdAt?: true
   }
 
@@ -6622,6 +6856,7 @@ export namespace Prisma {
     chatId?: true
     message?: true
     senderId?: true
+    type?: true
     createdAt?: true
     _all?: true
   }
@@ -6703,6 +6938,7 @@ export namespace Prisma {
     chatId: string
     message: string
     senderId: string
+    type: $Enums.MessageType
     createdAt: Date
     _count: MessageCountAggregateOutputType | null
     _min: MessageMinAggregateOutputType | null
@@ -6728,8 +6964,10 @@ export namespace Prisma {
     chatId?: boolean
     message?: boolean
     senderId?: boolean
+    type?: boolean
     createdAt?: boolean
     chat?: boolean | ChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6737,8 +6975,10 @@ export namespace Prisma {
     chatId?: boolean
     message?: boolean
     senderId?: boolean
+    type?: boolean
     createdAt?: boolean
     chat?: boolean | ChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6746,8 +6986,10 @@ export namespace Prisma {
     chatId?: boolean
     message?: boolean
     senderId?: boolean
+    type?: boolean
     createdAt?: boolean
     chat?: boolean | ChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectScalar = {
@@ -6755,30 +6997,36 @@ export namespace Prisma {
     chatId?: boolean
     message?: boolean
     senderId?: boolean
+    type?: boolean
     createdAt?: boolean
   }
 
-  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "chatId" | "message" | "senderId" | "createdAt", ExtArgs["result"]["message"]>
+  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "chatId" | "message" | "senderId" | "type" | "createdAt", ExtArgs["result"]["message"]>
   export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chat?: boolean | ChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type MessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chat?: boolean | ChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type MessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chat?: boolean | ChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $MessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Message"
     objects: {
       chat: Prisma.$ChatPayload<ExtArgs>
+      sender: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       chatId: string
       message: string
       senderId: string
+      type: $Enums.MessageType
       createdAt: Date
     }, ExtArgs["result"]["message"]>
     composites: {}
@@ -7175,6 +7423,7 @@ export namespace Prisma {
   export interface Prisma__MessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     chat<T extends ChatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChatDefaultArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7208,6 +7457,7 @@ export namespace Prisma {
     readonly chatId: FieldRef<"Message", 'String'>
     readonly message: FieldRef<"Message", 'String'>
     readonly senderId: FieldRef<"Message", 'String'>
+    readonly type: FieldRef<"Message", 'MessageType'>
     readonly createdAt: FieldRef<"Message", 'DateTime'>
   }
     
@@ -7629,6 +7879,1142 @@ export namespace Prisma {
 
 
   /**
+   * Model RentalRequest
+   */
+
+  export type AggregateRentalRequest = {
+    _count: RentalRequestCountAggregateOutputType | null
+    _min: RentalRequestMinAggregateOutputType | null
+    _max: RentalRequestMaxAggregateOutputType | null
+  }
+
+  export type RentalRequestMinAggregateOutputType = {
+    id: string | null
+    chatId: string | null
+    listingId: string | null
+    renterId: string | null
+    ownerId: string | null
+    status: $Enums.RentalRequestStatus | null
+    rentalStart: Date | null
+    rentalEnd: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RentalRequestMaxAggregateOutputType = {
+    id: string | null
+    chatId: string | null
+    listingId: string | null
+    renterId: string | null
+    ownerId: string | null
+    status: $Enums.RentalRequestStatus | null
+    rentalStart: Date | null
+    rentalEnd: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RentalRequestCountAggregateOutputType = {
+    id: number
+    chatId: number
+    listingId: number
+    renterId: number
+    ownerId: number
+    status: number
+    rentalStart: number
+    rentalEnd: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RentalRequestMinAggregateInputType = {
+    id?: true
+    chatId?: true
+    listingId?: true
+    renterId?: true
+    ownerId?: true
+    status?: true
+    rentalStart?: true
+    rentalEnd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RentalRequestMaxAggregateInputType = {
+    id?: true
+    chatId?: true
+    listingId?: true
+    renterId?: true
+    ownerId?: true
+    status?: true
+    rentalStart?: true
+    rentalEnd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RentalRequestCountAggregateInputType = {
+    id?: true
+    chatId?: true
+    listingId?: true
+    renterId?: true
+    ownerId?: true
+    status?: true
+    rentalStart?: true
+    rentalEnd?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RentalRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RentalRequest to aggregate.
+     */
+    where?: RentalRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RentalRequests to fetch.
+     */
+    orderBy?: RentalRequestOrderByWithRelationInput | RentalRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RentalRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RentalRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RentalRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RentalRequests
+    **/
+    _count?: true | RentalRequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RentalRequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RentalRequestMaxAggregateInputType
+  }
+
+  export type GetRentalRequestAggregateType<T extends RentalRequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateRentalRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRentalRequest[P]>
+      : GetScalarType<T[P], AggregateRentalRequest[P]>
+  }
+
+
+
+
+  export type RentalRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RentalRequestWhereInput
+    orderBy?: RentalRequestOrderByWithAggregationInput | RentalRequestOrderByWithAggregationInput[]
+    by: RentalRequestScalarFieldEnum[] | RentalRequestScalarFieldEnum
+    having?: RentalRequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RentalRequestCountAggregateInputType | true
+    _min?: RentalRequestMinAggregateInputType
+    _max?: RentalRequestMaxAggregateInputType
+  }
+
+  export type RentalRequestGroupByOutputType = {
+    id: string
+    chatId: string
+    listingId: string
+    renterId: string
+    ownerId: string
+    status: $Enums.RentalRequestStatus
+    rentalStart: Date
+    rentalEnd: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: RentalRequestCountAggregateOutputType | null
+    _min: RentalRequestMinAggregateOutputType | null
+    _max: RentalRequestMaxAggregateOutputType | null
+  }
+
+  type GetRentalRequestGroupByPayload<T extends RentalRequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RentalRequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RentalRequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RentalRequestGroupByOutputType[P]>
+            : GetScalarType<T[P], RentalRequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RentalRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    chatId?: boolean
+    listingId?: boolean
+    renterId?: boolean
+    ownerId?: boolean
+    status?: boolean
+    rentalStart?: boolean
+    rentalEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
+    listing?: boolean | ListingDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["rentalRequest"]>
+
+  export type RentalRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    chatId?: boolean
+    listingId?: boolean
+    renterId?: boolean
+    ownerId?: boolean
+    status?: boolean
+    rentalStart?: boolean
+    rentalEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
+    listing?: boolean | ListingDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["rentalRequest"]>
+
+  export type RentalRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    chatId?: boolean
+    listingId?: boolean
+    renterId?: boolean
+    ownerId?: boolean
+    status?: boolean
+    rentalStart?: boolean
+    rentalEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
+    listing?: boolean | ListingDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["rentalRequest"]>
+
+  export type RentalRequestSelectScalar = {
+    id?: boolean
+    chatId?: boolean
+    listingId?: boolean
+    renterId?: boolean
+    ownerId?: boolean
+    status?: boolean
+    rentalStart?: boolean
+    rentalEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RentalRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "chatId" | "listingId" | "renterId" | "ownerId" | "status" | "rentalStart" | "rentalEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["rentalRequest"]>
+  export type RentalRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
+    listing?: boolean | ListingDefaultArgs<ExtArgs>
+  }
+  export type RentalRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
+    listing?: boolean | ListingDefaultArgs<ExtArgs>
+  }
+  export type RentalRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chat?: boolean | ChatDefaultArgs<ExtArgs>
+    listing?: boolean | ListingDefaultArgs<ExtArgs>
+  }
+
+  export type $RentalRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RentalRequest"
+    objects: {
+      chat: Prisma.$ChatPayload<ExtArgs>
+      listing: Prisma.$ListingPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      chatId: string
+      listingId: string
+      renterId: string
+      ownerId: string
+      status: $Enums.RentalRequestStatus
+      rentalStart: Date
+      rentalEnd: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["rentalRequest"]>
+    composites: {}
+  }
+
+  type RentalRequestGetPayload<S extends boolean | null | undefined | RentalRequestDefaultArgs> = $Result.GetResult<Prisma.$RentalRequestPayload, S>
+
+  type RentalRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RentalRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RentalRequestCountAggregateInputType | true
+    }
+
+  export interface RentalRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RentalRequest'], meta: { name: 'RentalRequest' } }
+    /**
+     * Find zero or one RentalRequest that matches the filter.
+     * @param {RentalRequestFindUniqueArgs} args - Arguments to find a RentalRequest
+     * @example
+     * // Get one RentalRequest
+     * const rentalRequest = await prisma.rentalRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RentalRequestFindUniqueArgs>(args: SelectSubset<T, RentalRequestFindUniqueArgs<ExtArgs>>): Prisma__RentalRequestClient<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RentalRequest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RentalRequestFindUniqueOrThrowArgs} args - Arguments to find a RentalRequest
+     * @example
+     * // Get one RentalRequest
+     * const rentalRequest = await prisma.rentalRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RentalRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, RentalRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RentalRequestClient<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RentalRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RentalRequestFindFirstArgs} args - Arguments to find a RentalRequest
+     * @example
+     * // Get one RentalRequest
+     * const rentalRequest = await prisma.rentalRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RentalRequestFindFirstArgs>(args?: SelectSubset<T, RentalRequestFindFirstArgs<ExtArgs>>): Prisma__RentalRequestClient<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RentalRequest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RentalRequestFindFirstOrThrowArgs} args - Arguments to find a RentalRequest
+     * @example
+     * // Get one RentalRequest
+     * const rentalRequest = await prisma.rentalRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RentalRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, RentalRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__RentalRequestClient<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RentalRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RentalRequestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RentalRequests
+     * const rentalRequests = await prisma.rentalRequest.findMany()
+     * 
+     * // Get first 10 RentalRequests
+     * const rentalRequests = await prisma.rentalRequest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const rentalRequestWithIdOnly = await prisma.rentalRequest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RentalRequestFindManyArgs>(args?: SelectSubset<T, RentalRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RentalRequest.
+     * @param {RentalRequestCreateArgs} args - Arguments to create a RentalRequest.
+     * @example
+     * // Create one RentalRequest
+     * const RentalRequest = await prisma.rentalRequest.create({
+     *   data: {
+     *     // ... data to create a RentalRequest
+     *   }
+     * })
+     * 
+     */
+    create<T extends RentalRequestCreateArgs>(args: SelectSubset<T, RentalRequestCreateArgs<ExtArgs>>): Prisma__RentalRequestClient<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RentalRequests.
+     * @param {RentalRequestCreateManyArgs} args - Arguments to create many RentalRequests.
+     * @example
+     * // Create many RentalRequests
+     * const rentalRequest = await prisma.rentalRequest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RentalRequestCreateManyArgs>(args?: SelectSubset<T, RentalRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RentalRequests and returns the data saved in the database.
+     * @param {RentalRequestCreateManyAndReturnArgs} args - Arguments to create many RentalRequests.
+     * @example
+     * // Create many RentalRequests
+     * const rentalRequest = await prisma.rentalRequest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RentalRequests and only return the `id`
+     * const rentalRequestWithIdOnly = await prisma.rentalRequest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RentalRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, RentalRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RentalRequest.
+     * @param {RentalRequestDeleteArgs} args - Arguments to delete one RentalRequest.
+     * @example
+     * // Delete one RentalRequest
+     * const RentalRequest = await prisma.rentalRequest.delete({
+     *   where: {
+     *     // ... filter to delete one RentalRequest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RentalRequestDeleteArgs>(args: SelectSubset<T, RentalRequestDeleteArgs<ExtArgs>>): Prisma__RentalRequestClient<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RentalRequest.
+     * @param {RentalRequestUpdateArgs} args - Arguments to update one RentalRequest.
+     * @example
+     * // Update one RentalRequest
+     * const rentalRequest = await prisma.rentalRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RentalRequestUpdateArgs>(args: SelectSubset<T, RentalRequestUpdateArgs<ExtArgs>>): Prisma__RentalRequestClient<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RentalRequests.
+     * @param {RentalRequestDeleteManyArgs} args - Arguments to filter RentalRequests to delete.
+     * @example
+     * // Delete a few RentalRequests
+     * const { count } = await prisma.rentalRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RentalRequestDeleteManyArgs>(args?: SelectSubset<T, RentalRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RentalRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RentalRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RentalRequests
+     * const rentalRequest = await prisma.rentalRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RentalRequestUpdateManyArgs>(args: SelectSubset<T, RentalRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RentalRequests and returns the data updated in the database.
+     * @param {RentalRequestUpdateManyAndReturnArgs} args - Arguments to update many RentalRequests.
+     * @example
+     * // Update many RentalRequests
+     * const rentalRequest = await prisma.rentalRequest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RentalRequests and only return the `id`
+     * const rentalRequestWithIdOnly = await prisma.rentalRequest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RentalRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, RentalRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RentalRequest.
+     * @param {RentalRequestUpsertArgs} args - Arguments to update or create a RentalRequest.
+     * @example
+     * // Update or create a RentalRequest
+     * const rentalRequest = await prisma.rentalRequest.upsert({
+     *   create: {
+     *     // ... data to create a RentalRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RentalRequest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RentalRequestUpsertArgs>(args: SelectSubset<T, RentalRequestUpsertArgs<ExtArgs>>): Prisma__RentalRequestClient<$Result.GetResult<Prisma.$RentalRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RentalRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RentalRequestCountArgs} args - Arguments to filter RentalRequests to count.
+     * @example
+     * // Count the number of RentalRequests
+     * const count = await prisma.rentalRequest.count({
+     *   where: {
+     *     // ... the filter for the RentalRequests we want to count
+     *   }
+     * })
+    **/
+    count<T extends RentalRequestCountArgs>(
+      args?: Subset<T, RentalRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RentalRequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RentalRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RentalRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RentalRequestAggregateArgs>(args: Subset<T, RentalRequestAggregateArgs>): Prisma.PrismaPromise<GetRentalRequestAggregateType<T>>
+
+    /**
+     * Group by RentalRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RentalRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RentalRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RentalRequestGroupByArgs['orderBy'] }
+        : { orderBy?: RentalRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RentalRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRentalRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RentalRequest model
+   */
+  readonly fields: RentalRequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RentalRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RentalRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chat<T extends ChatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChatDefaultArgs<ExtArgs>>): Prisma__ChatClient<$Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    listing<T extends ListingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ListingDefaultArgs<ExtArgs>>): Prisma__ListingClient<$Result.GetResult<Prisma.$ListingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RentalRequest model
+   */
+  interface RentalRequestFieldRefs {
+    readonly id: FieldRef<"RentalRequest", 'String'>
+    readonly chatId: FieldRef<"RentalRequest", 'String'>
+    readonly listingId: FieldRef<"RentalRequest", 'String'>
+    readonly renterId: FieldRef<"RentalRequest", 'String'>
+    readonly ownerId: FieldRef<"RentalRequest", 'String'>
+    readonly status: FieldRef<"RentalRequest", 'RentalRequestStatus'>
+    readonly rentalStart: FieldRef<"RentalRequest", 'DateTime'>
+    readonly rentalEnd: FieldRef<"RentalRequest", 'DateTime'>
+    readonly createdAt: FieldRef<"RentalRequest", 'DateTime'>
+    readonly updatedAt: FieldRef<"RentalRequest", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RentalRequest findUnique
+   */
+  export type RentalRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which RentalRequest to fetch.
+     */
+    where: RentalRequestWhereUniqueInput
+  }
+
+  /**
+   * RentalRequest findUniqueOrThrow
+   */
+  export type RentalRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which RentalRequest to fetch.
+     */
+    where: RentalRequestWhereUniqueInput
+  }
+
+  /**
+   * RentalRequest findFirst
+   */
+  export type RentalRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which RentalRequest to fetch.
+     */
+    where?: RentalRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RentalRequests to fetch.
+     */
+    orderBy?: RentalRequestOrderByWithRelationInput | RentalRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RentalRequests.
+     */
+    cursor?: RentalRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RentalRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RentalRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RentalRequests.
+     */
+    distinct?: RentalRequestScalarFieldEnum | RentalRequestScalarFieldEnum[]
+  }
+
+  /**
+   * RentalRequest findFirstOrThrow
+   */
+  export type RentalRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which RentalRequest to fetch.
+     */
+    where?: RentalRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RentalRequests to fetch.
+     */
+    orderBy?: RentalRequestOrderByWithRelationInput | RentalRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RentalRequests.
+     */
+    cursor?: RentalRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RentalRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RentalRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RentalRequests.
+     */
+    distinct?: RentalRequestScalarFieldEnum | RentalRequestScalarFieldEnum[]
+  }
+
+  /**
+   * RentalRequest findMany
+   */
+  export type RentalRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which RentalRequests to fetch.
+     */
+    where?: RentalRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RentalRequests to fetch.
+     */
+    orderBy?: RentalRequestOrderByWithRelationInput | RentalRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RentalRequests.
+     */
+    cursor?: RentalRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RentalRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RentalRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RentalRequests.
+     */
+    distinct?: RentalRequestScalarFieldEnum | RentalRequestScalarFieldEnum[]
+  }
+
+  /**
+   * RentalRequest create
+   */
+  export type RentalRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RentalRequest.
+     */
+    data: XOR<RentalRequestCreateInput, RentalRequestUncheckedCreateInput>
+  }
+
+  /**
+   * RentalRequest createMany
+   */
+  export type RentalRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RentalRequests.
+     */
+    data: RentalRequestCreateManyInput | RentalRequestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RentalRequest createManyAndReturn
+   */
+  export type RentalRequestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * The data used to create many RentalRequests.
+     */
+    data: RentalRequestCreateManyInput | RentalRequestCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RentalRequest update
+   */
+  export type RentalRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RentalRequest.
+     */
+    data: XOR<RentalRequestUpdateInput, RentalRequestUncheckedUpdateInput>
+    /**
+     * Choose, which RentalRequest to update.
+     */
+    where: RentalRequestWhereUniqueInput
+  }
+
+  /**
+   * RentalRequest updateMany
+   */
+  export type RentalRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RentalRequests.
+     */
+    data: XOR<RentalRequestUpdateManyMutationInput, RentalRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which RentalRequests to update
+     */
+    where?: RentalRequestWhereInput
+    /**
+     * Limit how many RentalRequests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RentalRequest updateManyAndReturn
+   */
+  export type RentalRequestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * The data used to update RentalRequests.
+     */
+    data: XOR<RentalRequestUpdateManyMutationInput, RentalRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which RentalRequests to update
+     */
+    where?: RentalRequestWhereInput
+    /**
+     * Limit how many RentalRequests to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RentalRequest upsert
+   */
+  export type RentalRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RentalRequest to update in case it exists.
+     */
+    where: RentalRequestWhereUniqueInput
+    /**
+     * In case the RentalRequest found by the `where` argument doesn't exist, create a new RentalRequest with this data.
+     */
+    create: XOR<RentalRequestCreateInput, RentalRequestUncheckedCreateInput>
+    /**
+     * In case the RentalRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RentalRequestUpdateInput, RentalRequestUncheckedUpdateInput>
+  }
+
+  /**
+   * RentalRequest delete
+   */
+  export type RentalRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+    /**
+     * Filter which RentalRequest to delete.
+     */
+    where: RentalRequestWhereUniqueInput
+  }
+
+  /**
+   * RentalRequest deleteMany
+   */
+  export type RentalRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RentalRequests to delete
+     */
+    where?: RentalRequestWhereInput
+    /**
+     * Limit how many RentalRequests to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RentalRequest without action
+   */
+  export type RentalRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RentalRequest
+     */
+    select?: RentalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RentalRequest
+     */
+    omit?: RentalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RentalRequestInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -7731,10 +9117,27 @@ export namespace Prisma {
     chatId: 'chatId',
     message: 'message',
     senderId: 'senderId',
+    type: 'type',
     createdAt: 'createdAt'
   };
 
   export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+  export const RentalRequestScalarFieldEnum: {
+    id: 'id',
+    chatId: 'chatId',
+    listingId: 'listingId',
+    renterId: 'renterId',
+    ownerId: 'ownerId',
+    status: 'status',
+    rentalStart: 'rentalStart',
+    rentalEnd: 'rentalEnd',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RentalRequestScalarFieldEnum = (typeof RentalRequestScalarFieldEnum)[keyof typeof RentalRequestScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -7925,6 +9328,34 @@ export namespace Prisma {
    */
   export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
     
+
+
+  /**
+   * Reference to a field of type 'MessageType'
+   */
+  export type EnumMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageType'>
+    
+
+
+  /**
+   * Reference to a field of type 'MessageType[]'
+   */
+  export type ListEnumMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'RentalRequestStatus'
+   */
+  export type EnumRentalRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RentalRequestStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'RentalRequestStatus[]'
+   */
+  export type ListEnumRentalRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RentalRequestStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -7944,6 +9375,7 @@ export namespace Prisma {
     orders?: OrderListRelationFilter
     ownerChats?: ChatListRelationFilter
     chatUserChats?: ChatListRelationFilter
+    messages?: MessageListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7957,6 +9389,7 @@ export namespace Prisma {
     orders?: OrderOrderByRelationAggregateInput
     ownerChats?: ChatOrderByRelationAggregateInput
     chatUserChats?: ChatOrderByRelationAggregateInput
+    messages?: MessageOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7973,6 +9406,7 @@ export namespace Prisma {
     orders?: OrderListRelationFilter
     ownerChats?: ChatListRelationFilter
     chatUserChats?: ChatListRelationFilter
+    messages?: MessageListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8039,6 +9473,7 @@ export namespace Prisma {
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     orders?: OrderListRelationFilter
     chats?: ChatListRelationFilter
+    rentalRequests?: RentalRequestListRelationFilter
   }
 
   export type ListingOrderByWithRelationInput = {
@@ -8078,6 +9513,7 @@ export namespace Prisma {
     owner?: UserOrderByWithRelationInput
     orders?: OrderOrderByRelationAggregateInput
     chats?: ChatOrderByRelationAggregateInput
+    rentalRequests?: RentalRequestOrderByRelationAggregateInput
   }
 
   export type ListingWhereUniqueInput = Prisma.AtLeast<{
@@ -8120,6 +9556,7 @@ export namespace Prisma {
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     orders?: OrderListRelationFilter
     chats?: ChatListRelationFilter
+    rentalRequests?: RentalRequestListRelationFilter
   }, "id">
 
   export type ListingOrderByWithAggregationInput = {
@@ -8310,6 +9747,7 @@ export namespace Prisma {
     listing?: XOR<ListingScalarRelationFilter, ListingWhereInput>
     ownerUser?: XOR<UserScalarRelationFilter, UserWhereInput>
     chatUser?: XOR<UserScalarRelationFilter, UserWhereInput>
+    rentalRequests?: RentalRequestListRelationFilter
   }
 
   export type ChatOrderByWithRelationInput = {
@@ -8327,6 +9765,7 @@ export namespace Prisma {
     listing?: ListingOrderByWithRelationInput
     ownerUser?: UserOrderByWithRelationInput
     chatUser?: UserOrderByWithRelationInput
+    rentalRequests?: RentalRequestOrderByRelationAggregateInput
   }
 
   export type ChatWhereUniqueInput = Prisma.AtLeast<{
@@ -8347,6 +9786,7 @@ export namespace Prisma {
     listing?: XOR<ListingScalarRelationFilter, ListingWhereInput>
     ownerUser?: XOR<UserScalarRelationFilter, UserWhereInput>
     chatUser?: XOR<UserScalarRelationFilter, UserWhereInput>
+    rentalRequests?: RentalRequestListRelationFilter
   }, "id">
 
   export type ChatOrderByWithAggregationInput = {
@@ -8389,8 +9829,10 @@ export namespace Prisma {
     chatId?: StringFilter<"Message"> | string
     message?: StringFilter<"Message"> | string
     senderId?: StringFilter<"Message"> | string
+    type?: EnumMessageTypeFilter<"Message"> | $Enums.MessageType
     createdAt?: DateTimeFilter<"Message"> | Date | string
     chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type MessageOrderByWithRelationInput = {
@@ -8398,8 +9840,10 @@ export namespace Prisma {
     chatId?: SortOrder
     message?: SortOrder
     senderId?: SortOrder
+    type?: SortOrder
     createdAt?: SortOrder
     chat?: ChatOrderByWithRelationInput
+    sender?: UserOrderByWithRelationInput
   }
 
   export type MessageWhereUniqueInput = Prisma.AtLeast<{
@@ -8410,8 +9854,10 @@ export namespace Prisma {
     chatId?: StringFilter<"Message"> | string
     message?: StringFilter<"Message"> | string
     senderId?: StringFilter<"Message"> | string
+    type?: EnumMessageTypeFilter<"Message"> | $Enums.MessageType
     createdAt?: DateTimeFilter<"Message"> | Date | string
     chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type MessageOrderByWithAggregationInput = {
@@ -8419,6 +9865,7 @@ export namespace Prisma {
     chatId?: SortOrder
     message?: SortOrder
     senderId?: SortOrder
+    type?: SortOrder
     createdAt?: SortOrder
     _count?: MessageCountOrderByAggregateInput
     _max?: MessageMaxOrderByAggregateInput
@@ -8433,7 +9880,91 @@ export namespace Prisma {
     chatId?: StringWithAggregatesFilter<"Message"> | string
     message?: StringWithAggregatesFilter<"Message"> | string
     senderId?: StringWithAggregatesFilter<"Message"> | string
+    type?: EnumMessageTypeWithAggregatesFilter<"Message"> | $Enums.MessageType
     createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
+  }
+
+  export type RentalRequestWhereInput = {
+    AND?: RentalRequestWhereInput | RentalRequestWhereInput[]
+    OR?: RentalRequestWhereInput[]
+    NOT?: RentalRequestWhereInput | RentalRequestWhereInput[]
+    id?: StringFilter<"RentalRequest"> | string
+    chatId?: StringFilter<"RentalRequest"> | string
+    listingId?: StringFilter<"RentalRequest"> | string
+    renterId?: StringFilter<"RentalRequest"> | string
+    ownerId?: StringFilter<"RentalRequest"> | string
+    status?: EnumRentalRequestStatusFilter<"RentalRequest"> | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFilter<"RentalRequest"> | Date | string
+    rentalEnd?: DateTimeFilter<"RentalRequest"> | Date | string
+    createdAt?: DateTimeFilter<"RentalRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"RentalRequest"> | Date | string
+    chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
+    listing?: XOR<ListingScalarRelationFilter, ListingWhereInput>
+  }
+
+  export type RentalRequestOrderByWithRelationInput = {
+    id?: SortOrder
+    chatId?: SortOrder
+    listingId?: SortOrder
+    renterId?: SortOrder
+    ownerId?: SortOrder
+    status?: SortOrder
+    rentalStart?: SortOrder
+    rentalEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chat?: ChatOrderByWithRelationInput
+    listing?: ListingOrderByWithRelationInput
+  }
+
+  export type RentalRequestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RentalRequestWhereInput | RentalRequestWhereInput[]
+    OR?: RentalRequestWhereInput[]
+    NOT?: RentalRequestWhereInput | RentalRequestWhereInput[]
+    chatId?: StringFilter<"RentalRequest"> | string
+    listingId?: StringFilter<"RentalRequest"> | string
+    renterId?: StringFilter<"RentalRequest"> | string
+    ownerId?: StringFilter<"RentalRequest"> | string
+    status?: EnumRentalRequestStatusFilter<"RentalRequest"> | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFilter<"RentalRequest"> | Date | string
+    rentalEnd?: DateTimeFilter<"RentalRequest"> | Date | string
+    createdAt?: DateTimeFilter<"RentalRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"RentalRequest"> | Date | string
+    chat?: XOR<ChatScalarRelationFilter, ChatWhereInput>
+    listing?: XOR<ListingScalarRelationFilter, ListingWhereInput>
+  }, "id">
+
+  export type RentalRequestOrderByWithAggregationInput = {
+    id?: SortOrder
+    chatId?: SortOrder
+    listingId?: SortOrder
+    renterId?: SortOrder
+    ownerId?: SortOrder
+    status?: SortOrder
+    rentalStart?: SortOrder
+    rentalEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RentalRequestCountOrderByAggregateInput
+    _max?: RentalRequestMaxOrderByAggregateInput
+    _min?: RentalRequestMinOrderByAggregateInput
+  }
+
+  export type RentalRequestScalarWhereWithAggregatesInput = {
+    AND?: RentalRequestScalarWhereWithAggregatesInput | RentalRequestScalarWhereWithAggregatesInput[]
+    OR?: RentalRequestScalarWhereWithAggregatesInput[]
+    NOT?: RentalRequestScalarWhereWithAggregatesInput | RentalRequestScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RentalRequest"> | string
+    chatId?: StringWithAggregatesFilter<"RentalRequest"> | string
+    listingId?: StringWithAggregatesFilter<"RentalRequest"> | string
+    renterId?: StringWithAggregatesFilter<"RentalRequest"> | string
+    ownerId?: StringWithAggregatesFilter<"RentalRequest"> | string
+    status?: EnumRentalRequestStatusWithAggregatesFilter<"RentalRequest"> | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeWithAggregatesFilter<"RentalRequest"> | Date | string
+    rentalEnd?: DateTimeWithAggregatesFilter<"RentalRequest"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"RentalRequest"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"RentalRequest"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -8447,6 +9978,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutUserInput
     ownerChats?: ChatCreateNestedManyWithoutOwnerUserInput
     chatUserChats?: ChatCreateNestedManyWithoutChatUserInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8460,6 +9992,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     ownerChats?: ChatUncheckedCreateNestedManyWithoutOwnerUserInput
     chatUserChats?: ChatUncheckedCreateNestedManyWithoutChatUserInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserUpdateInput = {
@@ -8473,6 +10006,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutUserNestedInput
     ownerChats?: ChatUpdateManyWithoutOwnerUserNestedInput
     chatUserChats?: ChatUpdateManyWithoutChatUserNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8486,6 +10020,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     ownerChats?: ChatUncheckedUpdateManyWithoutOwnerUserNestedInput
     chatUserChats?: ChatUncheckedUpdateManyWithoutChatUserNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8551,6 +10086,7 @@ export namespace Prisma {
     owner: UserCreateNestedOneWithoutListingsInput
     orders?: OrderCreateNestedManyWithoutListingInput
     chats?: ChatCreateNestedManyWithoutListingInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutListingInput
   }
 
   export type ListingUncheckedCreateInput = {
@@ -8589,6 +10125,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     orders?: OrderUncheckedCreateNestedManyWithoutListingInput
     chats?: ChatUncheckedCreateNestedManyWithoutListingInput
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutListingInput
   }
 
   export type ListingUpdateInput = {
@@ -8627,6 +10164,7 @@ export namespace Prisma {
     owner?: UserUpdateOneRequiredWithoutListingsNestedInput
     orders?: OrderUpdateManyWithoutListingNestedInput
     chats?: ChatUpdateManyWithoutListingNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutListingNestedInput
   }
 
   export type ListingUncheckedUpdateInput = {
@@ -8665,6 +10203,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orders?: OrderUncheckedUpdateManyWithoutListingNestedInput
     chats?: ChatUncheckedUpdateManyWithoutListingNestedInput
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutListingNestedInput
   }
 
   export type ListingCreateManyInput = {
@@ -8882,6 +10421,7 @@ export namespace Prisma {
     listing: ListingCreateNestedOneWithoutChatsInput
     ownerUser: UserCreateNestedOneWithoutOwnerChatsInput
     chatUser: UserCreateNestedOneWithoutChatUserChatsInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutChatInput
   }
 
   export type ChatUncheckedCreateInput = {
@@ -8896,6 +10436,7 @@ export namespace Prisma {
     isLastMessageRead?: boolean
     lastMessageSenderId?: string
     messages?: MessageUncheckedCreateNestedManyWithoutChatInput
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutChatInput
   }
 
   export type ChatUpdateInput = {
@@ -8910,6 +10451,7 @@ export namespace Prisma {
     listing?: ListingUpdateOneRequiredWithoutChatsNestedInput
     ownerUser?: UserUpdateOneRequiredWithoutOwnerChatsNestedInput
     chatUser?: UserUpdateOneRequiredWithoutChatUserChatsNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutChatNestedInput
   }
 
   export type ChatUncheckedUpdateInput = {
@@ -8924,6 +10466,7 @@ export namespace Prisma {
     isLastMessageRead?: BoolFieldUpdateOperationsInput | boolean
     lastMessageSenderId?: StringFieldUpdateOperationsInput | string
     messages?: MessageUncheckedUpdateManyWithoutChatNestedInput
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutChatNestedInput
   }
 
   export type ChatCreateManyInput = {
@@ -8965,9 +10508,10 @@ export namespace Prisma {
   export type MessageCreateInput = {
     id?: string
     message: string
-    senderId: string
+    type?: $Enums.MessageType
     createdAt?: Date | string
     chat: ChatCreateNestedOneWithoutMessagesInput
+    sender: UserCreateNestedOneWithoutMessagesInput
   }
 
   export type MessageUncheckedCreateInput = {
@@ -8975,15 +10519,17 @@ export namespace Prisma {
     chatId: string
     message: string
     senderId: string
+    type?: $Enums.MessageType
     createdAt?: Date | string
   }
 
   export type MessageUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
-    senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chat?: ChatUpdateOneRequiredWithoutMessagesNestedInput
+    sender?: UserUpdateOneRequiredWithoutMessagesNestedInput
   }
 
   export type MessageUncheckedUpdateInput = {
@@ -8991,6 +10537,7 @@ export namespace Prisma {
     chatId?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -8999,13 +10546,14 @@ export namespace Prisma {
     chatId: string
     message: string
     senderId: string
+    type?: $Enums.MessageType
     createdAt?: Date | string
   }
 
   export type MessageUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
-    senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9014,7 +10562,97 @@ export namespace Prisma {
     chatId?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RentalRequestCreateInput = {
+    id?: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chat: ChatCreateNestedOneWithoutRentalRequestsInput
+    listing: ListingCreateNestedOneWithoutRentalRequestsInput
+  }
+
+  export type RentalRequestUncheckedCreateInput = {
+    id?: string
+    chatId: string
+    listingId: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RentalRequestUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chat?: ChatUpdateOneRequiredWithoutRentalRequestsNestedInput
+    listing?: ListingUpdateOneRequiredWithoutRentalRequestsNestedInput
+  }
+
+  export type RentalRequestUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    listingId?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RentalRequestCreateManyInput = {
+    id?: string
+    chatId: string
+    listingId: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RentalRequestUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RentalRequestUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    listingId?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -9076,6 +10714,12 @@ export namespace Prisma {
     none?: ChatWhereInput
   }
 
+  export type MessageListRelationFilter = {
+    every?: MessageWhereInput
+    some?: MessageWhereInput
+    none?: MessageWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -9090,6 +10734,10 @@ export namespace Prisma {
   }
 
   export type ChatOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MessageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9272,6 +10920,16 @@ export namespace Prisma {
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type RentalRequestListRelationFilter = {
+    every?: RentalRequestWhereInput
+    some?: RentalRequestWhereInput
+    none?: RentalRequestWhereInput
+  }
+
+  export type RentalRequestOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ListingCountOrderByAggregateInput = {
@@ -9616,16 +11274,6 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
-  export type MessageListRelationFilter = {
-    every?: MessageWhereInput
-    some?: MessageWhereInput
-    none?: MessageWhereInput
-  }
-
-  export type MessageOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type ChatCountOrderByAggregateInput = {
     id?: SortOrder
     listingId?: SortOrder
@@ -9665,6 +11313,13 @@ export namespace Prisma {
     lastMessageSenderId?: SortOrder
   }
 
+  export type EnumMessageTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MessageType | EnumMessageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMessageTypeFilter<$PrismaModel> | $Enums.MessageType
+  }
+
   export type ChatScalarRelationFilter = {
     is?: ChatWhereInput
     isNot?: ChatWhereInput
@@ -9675,6 +11330,7 @@ export namespace Prisma {
     chatId?: SortOrder
     message?: SortOrder
     senderId?: SortOrder
+    type?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -9683,6 +11339,7 @@ export namespace Prisma {
     chatId?: SortOrder
     message?: SortOrder
     senderId?: SortOrder
+    type?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -9691,7 +11348,74 @@ export namespace Prisma {
     chatId?: SortOrder
     message?: SortOrder
     senderId?: SortOrder
+    type?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type EnumMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MessageType | EnumMessageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMessageTypeWithAggregatesFilter<$PrismaModel> | $Enums.MessageType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMessageTypeFilter<$PrismaModel>
+    _max?: NestedEnumMessageTypeFilter<$PrismaModel>
+  }
+
+  export type EnumRentalRequestStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RentalRequestStatus | EnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RentalRequestStatus[] | ListEnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RentalRequestStatus[] | ListEnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRentalRequestStatusFilter<$PrismaModel> | $Enums.RentalRequestStatus
+  }
+
+  export type RentalRequestCountOrderByAggregateInput = {
+    id?: SortOrder
+    chatId?: SortOrder
+    listingId?: SortOrder
+    renterId?: SortOrder
+    ownerId?: SortOrder
+    status?: SortOrder
+    rentalStart?: SortOrder
+    rentalEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RentalRequestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    chatId?: SortOrder
+    listingId?: SortOrder
+    renterId?: SortOrder
+    ownerId?: SortOrder
+    status?: SortOrder
+    rentalStart?: SortOrder
+    rentalEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RentalRequestMinOrderByAggregateInput = {
+    id?: SortOrder
+    chatId?: SortOrder
+    listingId?: SortOrder
+    renterId?: SortOrder
+    ownerId?: SortOrder
+    status?: SortOrder
+    rentalStart?: SortOrder
+    rentalEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumRentalRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RentalRequestStatus | EnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RentalRequestStatus[] | ListEnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RentalRequestStatus[] | ListEnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRentalRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.RentalRequestStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRentalRequestStatusFilter<$PrismaModel>
+    _max?: NestedEnumRentalRequestStatusFilter<$PrismaModel>
   }
 
   export type ListingCreateNestedManyWithoutOwnerInput = {
@@ -9722,6 +11446,13 @@ export namespace Prisma {
     connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
   }
 
+  export type MessageCreateNestedManyWithoutSenderInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
   export type ListingUncheckedCreateNestedManyWithoutOwnerInput = {
     create?: XOR<ListingCreateWithoutOwnerInput, ListingUncheckedCreateWithoutOwnerInput> | ListingCreateWithoutOwnerInput[] | ListingUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: ListingCreateOrConnectWithoutOwnerInput | ListingCreateOrConnectWithoutOwnerInput[]
@@ -9748,6 +11479,13 @@ export namespace Prisma {
     connectOrCreate?: ChatCreateOrConnectWithoutChatUserInput | ChatCreateOrConnectWithoutChatUserInput[]
     createMany?: ChatCreateManyChatUserInputEnvelope
     connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
+  }
+
+  export type MessageUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -9818,6 +11556,20 @@ export namespace Prisma {
     deleteMany?: ChatScalarWhereInput | ChatScalarWhereInput[]
   }
 
+  export type MessageUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutSenderInput | MessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
   export type ListingUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?: XOR<ListingCreateWithoutOwnerInput, ListingUncheckedCreateWithoutOwnerInput> | ListingCreateWithoutOwnerInput[] | ListingUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: ListingCreateOrConnectWithoutOwnerInput | ListingCreateOrConnectWithoutOwnerInput[]
@@ -9874,6 +11626,20 @@ export namespace Prisma {
     deleteMany?: ChatScalarWhereInput | ChatScalarWhereInput[]
   }
 
+  export type MessageUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutSenderInput | MessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
   export type ListingCreateimagesInput = {
     set: string[]
   }
@@ -9898,6 +11664,13 @@ export namespace Prisma {
     connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
   }
 
+  export type RentalRequestCreateNestedManyWithoutListingInput = {
+    create?: XOR<RentalRequestCreateWithoutListingInput, RentalRequestUncheckedCreateWithoutListingInput> | RentalRequestCreateWithoutListingInput[] | RentalRequestUncheckedCreateWithoutListingInput[]
+    connectOrCreate?: RentalRequestCreateOrConnectWithoutListingInput | RentalRequestCreateOrConnectWithoutListingInput[]
+    createMany?: RentalRequestCreateManyListingInputEnvelope
+    connect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+  }
+
   export type OrderUncheckedCreateNestedManyWithoutListingInput = {
     create?: XOR<OrderCreateWithoutListingInput, OrderUncheckedCreateWithoutListingInput> | OrderCreateWithoutListingInput[] | OrderUncheckedCreateWithoutListingInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutListingInput | OrderCreateOrConnectWithoutListingInput[]
@@ -9910,6 +11683,13 @@ export namespace Prisma {
     connectOrCreate?: ChatCreateOrConnectWithoutListingInput | ChatCreateOrConnectWithoutListingInput[]
     createMany?: ChatCreateManyListingInputEnvelope
     connect?: ChatWhereUniqueInput | ChatWhereUniqueInput[]
+  }
+
+  export type RentalRequestUncheckedCreateNestedManyWithoutListingInput = {
+    create?: XOR<RentalRequestCreateWithoutListingInput, RentalRequestUncheckedCreateWithoutListingInput> | RentalRequestCreateWithoutListingInput[] | RentalRequestUncheckedCreateWithoutListingInput[]
+    connectOrCreate?: RentalRequestCreateOrConnectWithoutListingInput | RentalRequestCreateOrConnectWithoutListingInput[]
+    createMany?: RentalRequestCreateManyListingInputEnvelope
+    connect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
   }
 
   export type EnumMakeFieldUpdateOperationsInput = {
@@ -10013,6 +11793,20 @@ export namespace Prisma {
     deleteMany?: ChatScalarWhereInput | ChatScalarWhereInput[]
   }
 
+  export type RentalRequestUpdateManyWithoutListingNestedInput = {
+    create?: XOR<RentalRequestCreateWithoutListingInput, RentalRequestUncheckedCreateWithoutListingInput> | RentalRequestCreateWithoutListingInput[] | RentalRequestUncheckedCreateWithoutListingInput[]
+    connectOrCreate?: RentalRequestCreateOrConnectWithoutListingInput | RentalRequestCreateOrConnectWithoutListingInput[]
+    upsert?: RentalRequestUpsertWithWhereUniqueWithoutListingInput | RentalRequestUpsertWithWhereUniqueWithoutListingInput[]
+    createMany?: RentalRequestCreateManyListingInputEnvelope
+    set?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    disconnect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    delete?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    connect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    update?: RentalRequestUpdateWithWhereUniqueWithoutListingInput | RentalRequestUpdateWithWhereUniqueWithoutListingInput[]
+    updateMany?: RentalRequestUpdateManyWithWhereWithoutListingInput | RentalRequestUpdateManyWithWhereWithoutListingInput[]
+    deleteMany?: RentalRequestScalarWhereInput | RentalRequestScalarWhereInput[]
+  }
+
   export type OrderUncheckedUpdateManyWithoutListingNestedInput = {
     create?: XOR<OrderCreateWithoutListingInput, OrderUncheckedCreateWithoutListingInput> | OrderCreateWithoutListingInput[] | OrderUncheckedCreateWithoutListingInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutListingInput | OrderCreateOrConnectWithoutListingInput[]
@@ -10039,6 +11833,20 @@ export namespace Prisma {
     update?: ChatUpdateWithWhereUniqueWithoutListingInput | ChatUpdateWithWhereUniqueWithoutListingInput[]
     updateMany?: ChatUpdateManyWithWhereWithoutListingInput | ChatUpdateManyWithWhereWithoutListingInput[]
     deleteMany?: ChatScalarWhereInput | ChatScalarWhereInput[]
+  }
+
+  export type RentalRequestUncheckedUpdateManyWithoutListingNestedInput = {
+    create?: XOR<RentalRequestCreateWithoutListingInput, RentalRequestUncheckedCreateWithoutListingInput> | RentalRequestCreateWithoutListingInput[] | RentalRequestUncheckedCreateWithoutListingInput[]
+    connectOrCreate?: RentalRequestCreateOrConnectWithoutListingInput | RentalRequestCreateOrConnectWithoutListingInput[]
+    upsert?: RentalRequestUpsertWithWhereUniqueWithoutListingInput | RentalRequestUpsertWithWhereUniqueWithoutListingInput[]
+    createMany?: RentalRequestCreateManyListingInputEnvelope
+    set?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    disconnect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    delete?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    connect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    update?: RentalRequestUpdateWithWhereUniqueWithoutListingInput | RentalRequestUpdateWithWhereUniqueWithoutListingInput[]
+    updateMany?: RentalRequestUpdateManyWithWhereWithoutListingInput | RentalRequestUpdateManyWithWhereWithoutListingInput[]
+    deleteMany?: RentalRequestScalarWhereInput | RentalRequestScalarWhereInput[]
   }
 
   export type ListingCreateNestedOneWithoutOrdersInput = {
@@ -10098,11 +11906,25 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type RentalRequestCreateNestedManyWithoutChatInput = {
+    create?: XOR<RentalRequestCreateWithoutChatInput, RentalRequestUncheckedCreateWithoutChatInput> | RentalRequestCreateWithoutChatInput[] | RentalRequestUncheckedCreateWithoutChatInput[]
+    connectOrCreate?: RentalRequestCreateOrConnectWithoutChatInput | RentalRequestCreateOrConnectWithoutChatInput[]
+    createMany?: RentalRequestCreateManyChatInputEnvelope
+    connect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+  }
+
   export type MessageUncheckedCreateNestedManyWithoutChatInput = {
     create?: XOR<MessageCreateWithoutChatInput, MessageUncheckedCreateWithoutChatInput> | MessageCreateWithoutChatInput[] | MessageUncheckedCreateWithoutChatInput[]
     connectOrCreate?: MessageCreateOrConnectWithoutChatInput | MessageCreateOrConnectWithoutChatInput[]
     createMany?: MessageCreateManyChatInputEnvelope
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
+  export type RentalRequestUncheckedCreateNestedManyWithoutChatInput = {
+    create?: XOR<RentalRequestCreateWithoutChatInput, RentalRequestUncheckedCreateWithoutChatInput> | RentalRequestCreateWithoutChatInput[] | RentalRequestUncheckedCreateWithoutChatInput[]
+    connectOrCreate?: RentalRequestCreateOrConnectWithoutChatInput | RentalRequestCreateOrConnectWithoutChatInput[]
+    createMany?: RentalRequestCreateManyChatInputEnvelope
+    connect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
   }
 
   export type MessageUpdateManyWithoutChatNestedInput = {
@@ -10143,6 +11965,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChatUserChatsInput, UserUpdateWithoutChatUserChatsInput>, UserUncheckedUpdateWithoutChatUserChatsInput>
   }
 
+  export type RentalRequestUpdateManyWithoutChatNestedInput = {
+    create?: XOR<RentalRequestCreateWithoutChatInput, RentalRequestUncheckedCreateWithoutChatInput> | RentalRequestCreateWithoutChatInput[] | RentalRequestUncheckedCreateWithoutChatInput[]
+    connectOrCreate?: RentalRequestCreateOrConnectWithoutChatInput | RentalRequestCreateOrConnectWithoutChatInput[]
+    upsert?: RentalRequestUpsertWithWhereUniqueWithoutChatInput | RentalRequestUpsertWithWhereUniqueWithoutChatInput[]
+    createMany?: RentalRequestCreateManyChatInputEnvelope
+    set?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    disconnect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    delete?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    connect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    update?: RentalRequestUpdateWithWhereUniqueWithoutChatInput | RentalRequestUpdateWithWhereUniqueWithoutChatInput[]
+    updateMany?: RentalRequestUpdateManyWithWhereWithoutChatInput | RentalRequestUpdateManyWithWhereWithoutChatInput[]
+    deleteMany?: RentalRequestScalarWhereInput | RentalRequestScalarWhereInput[]
+  }
+
   export type MessageUncheckedUpdateManyWithoutChatNestedInput = {
     create?: XOR<MessageCreateWithoutChatInput, MessageUncheckedCreateWithoutChatInput> | MessageCreateWithoutChatInput[] | MessageUncheckedCreateWithoutChatInput[]
     connectOrCreate?: MessageCreateOrConnectWithoutChatInput | MessageCreateOrConnectWithoutChatInput[]
@@ -10157,10 +11993,34 @@ export namespace Prisma {
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
+  export type RentalRequestUncheckedUpdateManyWithoutChatNestedInput = {
+    create?: XOR<RentalRequestCreateWithoutChatInput, RentalRequestUncheckedCreateWithoutChatInput> | RentalRequestCreateWithoutChatInput[] | RentalRequestUncheckedCreateWithoutChatInput[]
+    connectOrCreate?: RentalRequestCreateOrConnectWithoutChatInput | RentalRequestCreateOrConnectWithoutChatInput[]
+    upsert?: RentalRequestUpsertWithWhereUniqueWithoutChatInput | RentalRequestUpsertWithWhereUniqueWithoutChatInput[]
+    createMany?: RentalRequestCreateManyChatInputEnvelope
+    set?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    disconnect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    delete?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    connect?: RentalRequestWhereUniqueInput | RentalRequestWhereUniqueInput[]
+    update?: RentalRequestUpdateWithWhereUniqueWithoutChatInput | RentalRequestUpdateWithWhereUniqueWithoutChatInput[]
+    updateMany?: RentalRequestUpdateManyWithWhereWithoutChatInput | RentalRequestUpdateManyWithWhereWithoutChatInput[]
+    deleteMany?: RentalRequestScalarWhereInput | RentalRequestScalarWhereInput[]
+  }
+
   export type ChatCreateNestedOneWithoutMessagesInput = {
     create?: XOR<ChatCreateWithoutMessagesInput, ChatUncheckedCreateWithoutMessagesInput>
     connectOrCreate?: ChatCreateOrConnectWithoutMessagesInput
     connect?: ChatWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMessagesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumMessageTypeFieldUpdateOperationsInput = {
+    set?: $Enums.MessageType
   }
 
   export type ChatUpdateOneRequiredWithoutMessagesNestedInput = {
@@ -10169,6 +12029,46 @@ export namespace Prisma {
     upsert?: ChatUpsertWithoutMessagesInput
     connect?: ChatWhereUniqueInput
     update?: XOR<XOR<ChatUpdateToOneWithWhereWithoutMessagesInput, ChatUpdateWithoutMessagesInput>, ChatUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMessagesInput
+    upsert?: UserUpsertWithoutMessagesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMessagesInput, UserUpdateWithoutMessagesInput>, UserUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type ChatCreateNestedOneWithoutRentalRequestsInput = {
+    create?: XOR<ChatCreateWithoutRentalRequestsInput, ChatUncheckedCreateWithoutRentalRequestsInput>
+    connectOrCreate?: ChatCreateOrConnectWithoutRentalRequestsInput
+    connect?: ChatWhereUniqueInput
+  }
+
+  export type ListingCreateNestedOneWithoutRentalRequestsInput = {
+    create?: XOR<ListingCreateWithoutRentalRequestsInput, ListingUncheckedCreateWithoutRentalRequestsInput>
+    connectOrCreate?: ListingCreateOrConnectWithoutRentalRequestsInput
+    connect?: ListingWhereUniqueInput
+  }
+
+  export type EnumRentalRequestStatusFieldUpdateOperationsInput = {
+    set?: $Enums.RentalRequestStatus
+  }
+
+  export type ChatUpdateOneRequiredWithoutRentalRequestsNestedInput = {
+    create?: XOR<ChatCreateWithoutRentalRequestsInput, ChatUncheckedCreateWithoutRentalRequestsInput>
+    connectOrCreate?: ChatCreateOrConnectWithoutRentalRequestsInput
+    upsert?: ChatUpsertWithoutRentalRequestsInput
+    connect?: ChatWhereUniqueInput
+    update?: XOR<XOR<ChatUpdateToOneWithWhereWithoutRentalRequestsInput, ChatUpdateWithoutRentalRequestsInput>, ChatUncheckedUpdateWithoutRentalRequestsInput>
+  }
+
+  export type ListingUpdateOneRequiredWithoutRentalRequestsNestedInput = {
+    create?: XOR<ListingCreateWithoutRentalRequestsInput, ListingUncheckedCreateWithoutRentalRequestsInput>
+    connectOrCreate?: ListingCreateOrConnectWithoutRentalRequestsInput
+    upsert?: ListingUpsertWithoutRentalRequestsInput
+    connect?: ListingWhereUniqueInput
+    update?: XOR<XOR<ListingUpdateToOneWithWhereWithoutRentalRequestsInput, ListingUpdateWithoutRentalRequestsInput>, ListingUncheckedUpdateWithoutRentalRequestsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10498,6 +12398,40 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumMessageTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MessageType | EnumMessageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMessageTypeFilter<$PrismaModel> | $Enums.MessageType
+  }
+
+  export type NestedEnumMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MessageType | EnumMessageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMessageTypeWithAggregatesFilter<$PrismaModel> | $Enums.MessageType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMessageTypeFilter<$PrismaModel>
+    _max?: NestedEnumMessageTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRentalRequestStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RentalRequestStatus | EnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RentalRequestStatus[] | ListEnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RentalRequestStatus[] | ListEnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRentalRequestStatusFilter<$PrismaModel> | $Enums.RentalRequestStatus
+  }
+
+  export type NestedEnumRentalRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RentalRequestStatus | EnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RentalRequestStatus[] | ListEnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RentalRequestStatus[] | ListEnumRentalRequestStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRentalRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.RentalRequestStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRentalRequestStatusFilter<$PrismaModel>
+    _max?: NestedEnumRentalRequestStatusFilter<$PrismaModel>
+  }
+
   export type ListingCreateWithoutOwnerInput = {
     id?: string
     title: string
@@ -10533,6 +12467,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     orders?: OrderCreateNestedManyWithoutListingInput
     chats?: ChatCreateNestedManyWithoutListingInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutListingInput
   }
 
   export type ListingUncheckedCreateWithoutOwnerInput = {
@@ -10570,6 +12505,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     orders?: OrderUncheckedCreateNestedManyWithoutListingInput
     chats?: ChatUncheckedCreateNestedManyWithoutListingInput
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutListingInput
   }
 
   export type ListingCreateOrConnectWithoutOwnerInput = {
@@ -10629,6 +12565,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutChatInput
     listing: ListingCreateNestedOneWithoutChatsInput
     chatUser: UserCreateNestedOneWithoutChatUserChatsInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutChatInput
   }
 
   export type ChatUncheckedCreateWithoutOwnerUserInput = {
@@ -10642,6 +12579,7 @@ export namespace Prisma {
     isLastMessageRead?: boolean
     lastMessageSenderId?: string
     messages?: MessageUncheckedCreateNestedManyWithoutChatInput
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutChatInput
   }
 
   export type ChatCreateOrConnectWithoutOwnerUserInput = {
@@ -10665,6 +12603,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutChatInput
     listing: ListingCreateNestedOneWithoutChatsInput
     ownerUser: UserCreateNestedOneWithoutOwnerChatsInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutChatInput
   }
 
   export type ChatUncheckedCreateWithoutChatUserInput = {
@@ -10678,6 +12617,7 @@ export namespace Prisma {
     isLastMessageRead?: boolean
     lastMessageSenderId?: string
     messages?: MessageUncheckedCreateNestedManyWithoutChatInput
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutChatInput
   }
 
   export type ChatCreateOrConnectWithoutChatUserInput = {
@@ -10687,6 +12627,32 @@ export namespace Prisma {
 
   export type ChatCreateManyChatUserInputEnvelope = {
     data: ChatCreateManyChatUserInput | ChatCreateManyChatUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MessageCreateWithoutSenderInput = {
+    id?: string
+    message: string
+    type?: $Enums.MessageType
+    createdAt?: Date | string
+    chat: ChatCreateNestedOneWithoutMessagesInput
+  }
+
+  export type MessageUncheckedCreateWithoutSenderInput = {
+    id?: string
+    chatId: string
+    message: string
+    type?: $Enums.MessageType
+    createdAt?: Date | string
+  }
+
+  export type MessageCreateOrConnectWithoutSenderInput = {
+    where: MessageWhereUniqueInput
+    create: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput>
+  }
+
+  export type MessageCreateManySenderInputEnvelope = {
+    data: MessageCreateManySenderInput | MessageCreateManySenderInput[]
     skipDuplicates?: boolean
   }
 
@@ -10826,6 +12792,34 @@ export namespace Prisma {
     data: XOR<ChatUpdateManyMutationInput, ChatUncheckedUpdateManyWithoutChatUserInput>
   }
 
+  export type MessageUpsertWithWhereUniqueWithoutSenderInput = {
+    where: MessageWhereUniqueInput
+    update: XOR<MessageUpdateWithoutSenderInput, MessageUncheckedUpdateWithoutSenderInput>
+    create: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput>
+  }
+
+  export type MessageUpdateWithWhereUniqueWithoutSenderInput = {
+    where: MessageWhereUniqueInput
+    data: XOR<MessageUpdateWithoutSenderInput, MessageUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type MessageUpdateManyWithWhereWithoutSenderInput = {
+    where: MessageScalarWhereInput
+    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutSenderInput>
+  }
+
+  export type MessageScalarWhereInput = {
+    AND?: MessageScalarWhereInput | MessageScalarWhereInput[]
+    OR?: MessageScalarWhereInput[]
+    NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
+    id?: StringFilter<"Message"> | string
+    chatId?: StringFilter<"Message"> | string
+    message?: StringFilter<"Message"> | string
+    senderId?: StringFilter<"Message"> | string
+    type?: EnumMessageTypeFilter<"Message"> | $Enums.MessageType
+    createdAt?: DateTimeFilter<"Message"> | Date | string
+  }
+
   export type UserCreateWithoutListingsInput = {
     id?: string
     name: string
@@ -10836,6 +12830,7 @@ export namespace Prisma {
     orders?: OrderCreateNestedManyWithoutUserInput
     ownerChats?: ChatCreateNestedManyWithoutOwnerUserInput
     chatUserChats?: ChatCreateNestedManyWithoutChatUserInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutListingsInput = {
@@ -10848,6 +12843,7 @@ export namespace Prisma {
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     ownerChats?: ChatUncheckedCreateNestedManyWithoutOwnerUserInput
     chatUserChats?: ChatUncheckedCreateNestedManyWithoutChatUserInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutListingsInput = {
@@ -10902,6 +12898,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutChatInput
     ownerUser: UserCreateNestedOneWithoutOwnerChatsInput
     chatUser: UserCreateNestedOneWithoutChatUserChatsInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutChatInput
   }
 
   export type ChatUncheckedCreateWithoutListingInput = {
@@ -10915,6 +12912,7 @@ export namespace Prisma {
     isLastMessageRead?: boolean
     lastMessageSenderId?: string
     messages?: MessageUncheckedCreateNestedManyWithoutChatInput
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutChatInput
   }
 
   export type ChatCreateOrConnectWithoutListingInput = {
@@ -10924,6 +12922,40 @@ export namespace Prisma {
 
   export type ChatCreateManyListingInputEnvelope = {
     data: ChatCreateManyListingInput | ChatCreateManyListingInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RentalRequestCreateWithoutListingInput = {
+    id?: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chat: ChatCreateNestedOneWithoutRentalRequestsInput
+  }
+
+  export type RentalRequestUncheckedCreateWithoutListingInput = {
+    id?: string
+    chatId: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RentalRequestCreateOrConnectWithoutListingInput = {
+    where: RentalRequestWhereUniqueInput
+    create: XOR<RentalRequestCreateWithoutListingInput, RentalRequestUncheckedCreateWithoutListingInput>
+  }
+
+  export type RentalRequestCreateManyListingInputEnvelope = {
+    data: RentalRequestCreateManyListingInput | RentalRequestCreateManyListingInput[]
     skipDuplicates?: boolean
   }
 
@@ -10948,6 +12980,7 @@ export namespace Prisma {
     orders?: OrderUpdateManyWithoutUserNestedInput
     ownerChats?: ChatUpdateManyWithoutOwnerUserNestedInput
     chatUserChats?: ChatUpdateManyWithoutChatUserNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutListingsInput = {
@@ -10960,6 +12993,7 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     ownerChats?: ChatUncheckedUpdateManyWithoutOwnerUserNestedInput
     chatUserChats?: ChatUncheckedUpdateManyWithoutChatUserNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutListingInput = {
@@ -10992,6 +13026,38 @@ export namespace Prisma {
   export type ChatUpdateManyWithWhereWithoutListingInput = {
     where: ChatScalarWhereInput
     data: XOR<ChatUpdateManyMutationInput, ChatUncheckedUpdateManyWithoutListingInput>
+  }
+
+  export type RentalRequestUpsertWithWhereUniqueWithoutListingInput = {
+    where: RentalRequestWhereUniqueInput
+    update: XOR<RentalRequestUpdateWithoutListingInput, RentalRequestUncheckedUpdateWithoutListingInput>
+    create: XOR<RentalRequestCreateWithoutListingInput, RentalRequestUncheckedCreateWithoutListingInput>
+  }
+
+  export type RentalRequestUpdateWithWhereUniqueWithoutListingInput = {
+    where: RentalRequestWhereUniqueInput
+    data: XOR<RentalRequestUpdateWithoutListingInput, RentalRequestUncheckedUpdateWithoutListingInput>
+  }
+
+  export type RentalRequestUpdateManyWithWhereWithoutListingInput = {
+    where: RentalRequestScalarWhereInput
+    data: XOR<RentalRequestUpdateManyMutationInput, RentalRequestUncheckedUpdateManyWithoutListingInput>
+  }
+
+  export type RentalRequestScalarWhereInput = {
+    AND?: RentalRequestScalarWhereInput | RentalRequestScalarWhereInput[]
+    OR?: RentalRequestScalarWhereInput[]
+    NOT?: RentalRequestScalarWhereInput | RentalRequestScalarWhereInput[]
+    id?: StringFilter<"RentalRequest"> | string
+    chatId?: StringFilter<"RentalRequest"> | string
+    listingId?: StringFilter<"RentalRequest"> | string
+    renterId?: StringFilter<"RentalRequest"> | string
+    ownerId?: StringFilter<"RentalRequest"> | string
+    status?: EnumRentalRequestStatusFilter<"RentalRequest"> | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFilter<"RentalRequest"> | Date | string
+    rentalEnd?: DateTimeFilter<"RentalRequest"> | Date | string
+    createdAt?: DateTimeFilter<"RentalRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"RentalRequest"> | Date | string
   }
 
   export type ListingCreateWithoutOrdersInput = {
@@ -11029,6 +13095,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutListingsInput
     chats?: ChatCreateNestedManyWithoutListingInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutListingInput
   }
 
   export type ListingUncheckedCreateWithoutOrdersInput = {
@@ -11066,6 +13133,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chats?: ChatUncheckedCreateNestedManyWithoutListingInput
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutListingInput
   }
 
   export type ListingCreateOrConnectWithoutOrdersInput = {
@@ -11083,6 +13151,7 @@ export namespace Prisma {
     listings?: ListingCreateNestedManyWithoutOwnerInput
     ownerChats?: ChatCreateNestedManyWithoutOwnerUserInput
     chatUserChats?: ChatCreateNestedManyWithoutChatUserInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -11095,6 +13164,7 @@ export namespace Prisma {
     listings?: ListingUncheckedCreateNestedManyWithoutOwnerInput
     ownerChats?: ChatUncheckedCreateNestedManyWithoutOwnerUserInput
     chatUserChats?: ChatUncheckedCreateNestedManyWithoutChatUserInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -11148,6 +13218,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutListingsNestedInput
     chats?: ChatUpdateManyWithoutListingNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutListingNestedInput
   }
 
   export type ListingUncheckedUpdateWithoutOrdersInput = {
@@ -11185,6 +13256,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chats?: ChatUncheckedUpdateManyWithoutListingNestedInput
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutListingNestedInput
   }
 
   export type UserUpsertWithoutOrdersInput = {
@@ -11208,6 +13280,7 @@ export namespace Prisma {
     listings?: ListingUpdateManyWithoutOwnerNestedInput
     ownerChats?: ChatUpdateManyWithoutOwnerUserNestedInput
     chatUserChats?: ChatUpdateManyWithoutChatUserNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -11220,19 +13293,22 @@ export namespace Prisma {
     listings?: ListingUncheckedUpdateManyWithoutOwnerNestedInput
     ownerChats?: ChatUncheckedUpdateManyWithoutOwnerUserNestedInput
     chatUserChats?: ChatUncheckedUpdateManyWithoutChatUserNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type MessageCreateWithoutChatInput = {
     id?: string
     message: string
-    senderId: string
+    type?: $Enums.MessageType
     createdAt?: Date | string
+    sender: UserCreateNestedOneWithoutMessagesInput
   }
 
   export type MessageUncheckedCreateWithoutChatInput = {
     id?: string
     message: string
     senderId: string
+    type?: $Enums.MessageType
     createdAt?: Date | string
   }
 
@@ -11281,6 +13357,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutListingsInput
     orders?: OrderCreateNestedManyWithoutListingInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutListingInput
   }
 
   export type ListingUncheckedCreateWithoutChatsInput = {
@@ -11318,6 +13395,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orders?: OrderUncheckedCreateNestedManyWithoutListingInput
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutListingInput
   }
 
   export type ListingCreateOrConnectWithoutChatsInput = {
@@ -11335,6 +13413,7 @@ export namespace Prisma {
     listings?: ListingCreateNestedManyWithoutOwnerInput
     orders?: OrderCreateNestedManyWithoutUserInput
     chatUserChats?: ChatCreateNestedManyWithoutChatUserInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutOwnerChatsInput = {
@@ -11347,6 +13426,7 @@ export namespace Prisma {
     listings?: ListingUncheckedCreateNestedManyWithoutOwnerInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     chatUserChats?: ChatUncheckedCreateNestedManyWithoutChatUserInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutOwnerChatsInput = {
@@ -11364,6 +13444,7 @@ export namespace Prisma {
     listings?: ListingCreateNestedManyWithoutOwnerInput
     orders?: OrderCreateNestedManyWithoutUserInput
     ownerChats?: ChatCreateNestedManyWithoutOwnerUserInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutChatUserChatsInput = {
@@ -11376,11 +13457,46 @@ export namespace Prisma {
     listings?: ListingUncheckedCreateNestedManyWithoutOwnerInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     ownerChats?: ChatUncheckedCreateNestedManyWithoutOwnerUserInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutChatUserChatsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutChatUserChatsInput, UserUncheckedCreateWithoutChatUserChatsInput>
+  }
+
+  export type RentalRequestCreateWithoutChatInput = {
+    id?: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listing: ListingCreateNestedOneWithoutRentalRequestsInput
+  }
+
+  export type RentalRequestUncheckedCreateWithoutChatInput = {
+    id?: string
+    listingId: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RentalRequestCreateOrConnectWithoutChatInput = {
+    where: RentalRequestWhereUniqueInput
+    create: XOR<RentalRequestCreateWithoutChatInput, RentalRequestUncheckedCreateWithoutChatInput>
+  }
+
+  export type RentalRequestCreateManyChatInputEnvelope = {
+    data: RentalRequestCreateManyChatInput | RentalRequestCreateManyChatInput[]
+    skipDuplicates?: boolean
   }
 
   export type MessageUpsertWithWhereUniqueWithoutChatInput = {
@@ -11397,17 +13513,6 @@ export namespace Prisma {
   export type MessageUpdateManyWithWhereWithoutChatInput = {
     where: MessageScalarWhereInput
     data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutChatInput>
-  }
-
-  export type MessageScalarWhereInput = {
-    AND?: MessageScalarWhereInput | MessageScalarWhereInput[]
-    OR?: MessageScalarWhereInput[]
-    NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
-    id?: StringFilter<"Message"> | string
-    chatId?: StringFilter<"Message"> | string
-    message?: StringFilter<"Message"> | string
-    senderId?: StringFilter<"Message"> | string
-    createdAt?: DateTimeFilter<"Message"> | Date | string
   }
 
   export type ListingUpsertWithoutChatsInput = {
@@ -11456,6 +13561,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutListingsNestedInput
     orders?: OrderUpdateManyWithoutListingNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutListingNestedInput
   }
 
   export type ListingUncheckedUpdateWithoutChatsInput = {
@@ -11493,6 +13599,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orders?: OrderUncheckedUpdateManyWithoutListingNestedInput
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutListingNestedInput
   }
 
   export type UserUpsertWithoutOwnerChatsInput = {
@@ -11516,6 +13623,7 @@ export namespace Prisma {
     listings?: ListingUpdateManyWithoutOwnerNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     chatUserChats?: ChatUpdateManyWithoutChatUserNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOwnerChatsInput = {
@@ -11528,6 +13636,7 @@ export namespace Prisma {
     listings?: ListingUncheckedUpdateManyWithoutOwnerNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     chatUserChats?: ChatUncheckedUpdateManyWithoutChatUserNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUpsertWithoutChatUserChatsInput = {
@@ -11551,6 +13660,7 @@ export namespace Prisma {
     listings?: ListingUpdateManyWithoutOwnerNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     ownerChats?: ChatUpdateManyWithoutOwnerUserNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatUserChatsInput = {
@@ -11563,6 +13673,23 @@ export namespace Prisma {
     listings?: ListingUncheckedUpdateManyWithoutOwnerNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     ownerChats?: ChatUncheckedUpdateManyWithoutOwnerUserNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+  }
+
+  export type RentalRequestUpsertWithWhereUniqueWithoutChatInput = {
+    where: RentalRequestWhereUniqueInput
+    update: XOR<RentalRequestUpdateWithoutChatInput, RentalRequestUncheckedUpdateWithoutChatInput>
+    create: XOR<RentalRequestCreateWithoutChatInput, RentalRequestUncheckedCreateWithoutChatInput>
+  }
+
+  export type RentalRequestUpdateWithWhereUniqueWithoutChatInput = {
+    where: RentalRequestWhereUniqueInput
+    data: XOR<RentalRequestUpdateWithoutChatInput, RentalRequestUncheckedUpdateWithoutChatInput>
+  }
+
+  export type RentalRequestUpdateManyWithWhereWithoutChatInput = {
+    where: RentalRequestScalarWhereInput
+    data: XOR<RentalRequestUpdateManyMutationInput, RentalRequestUncheckedUpdateManyWithoutChatInput>
   }
 
   export type ChatCreateWithoutMessagesInput = {
@@ -11576,6 +13703,7 @@ export namespace Prisma {
     listing: ListingCreateNestedOneWithoutChatsInput
     ownerUser: UserCreateNestedOneWithoutOwnerChatsInput
     chatUser: UserCreateNestedOneWithoutChatUserChatsInput
+    rentalRequests?: RentalRequestCreateNestedManyWithoutChatInput
   }
 
   export type ChatUncheckedCreateWithoutMessagesInput = {
@@ -11589,11 +13717,43 @@ export namespace Prisma {
     lastMessage?: string
     isLastMessageRead?: boolean
     lastMessageSenderId?: string
+    rentalRequests?: RentalRequestUncheckedCreateNestedManyWithoutChatInput
   }
 
   export type ChatCreateOrConnectWithoutMessagesInput = {
     where: ChatWhereUniqueInput
     create: XOR<ChatCreateWithoutMessagesInput, ChatUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type UserCreateWithoutMessagesInput = {
+    id?: string
+    name: string
+    email: string
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listings?: ListingCreateNestedManyWithoutOwnerInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    ownerChats?: ChatCreateNestedManyWithoutOwnerUserInput
+    chatUserChats?: ChatCreateNestedManyWithoutChatUserInput
+  }
+
+  export type UserUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    name: string
+    email: string
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listings?: ListingUncheckedCreateNestedManyWithoutOwnerInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    ownerChats?: ChatUncheckedCreateNestedManyWithoutOwnerUserInput
+    chatUserChats?: ChatUncheckedCreateNestedManyWithoutChatUserInput
+  }
+
+  export type UserCreateOrConnectWithoutMessagesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
   }
 
   export type ChatUpsertWithoutMessagesInput = {
@@ -11618,6 +13778,7 @@ export namespace Prisma {
     listing?: ListingUpdateOneRequiredWithoutChatsNestedInput
     ownerUser?: UserUpdateOneRequiredWithoutOwnerChatsNestedInput
     chatUser?: UserUpdateOneRequiredWithoutChatUserChatsNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutChatNestedInput
   }
 
   export type ChatUncheckedUpdateWithoutMessagesInput = {
@@ -11631,6 +13792,284 @@ export namespace Prisma {
     lastMessage?: StringFieldUpdateOperationsInput | string
     isLastMessageRead?: BoolFieldUpdateOperationsInput | boolean
     lastMessageSenderId?: StringFieldUpdateOperationsInput | string
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutChatNestedInput
+  }
+
+  export type UserUpsertWithoutMessagesInput = {
+    update: XOR<UserUpdateWithoutMessagesInput, UserUncheckedUpdateWithoutMessagesInput>
+    create: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMessagesInput, UserUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type UserUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listings?: ListingUpdateManyWithoutOwnerNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    ownerChats?: ChatUpdateManyWithoutOwnerUserNestedInput
+    chatUserChats?: ChatUpdateManyWithoutChatUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listings?: ListingUncheckedUpdateManyWithoutOwnerNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    ownerChats?: ChatUncheckedUpdateManyWithoutOwnerUserNestedInput
+    chatUserChats?: ChatUncheckedUpdateManyWithoutChatUserNestedInput
+  }
+
+  export type ChatCreateWithoutRentalRequestsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    active?: boolean
+    lastMessage?: string
+    isLastMessageRead?: boolean
+    lastMessageSenderId?: string
+    messages?: MessageCreateNestedManyWithoutChatInput
+    listing: ListingCreateNestedOneWithoutChatsInput
+    ownerUser: UserCreateNestedOneWithoutOwnerChatsInput
+    chatUser: UserCreateNestedOneWithoutChatUserChatsInput
+  }
+
+  export type ChatUncheckedCreateWithoutRentalRequestsInput = {
+    id?: string
+    listingId: string
+    chatUserId: string
+    ownerUserId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    active?: boolean
+    lastMessage?: string
+    isLastMessageRead?: boolean
+    lastMessageSenderId?: string
+    messages?: MessageUncheckedCreateNestedManyWithoutChatInput
+  }
+
+  export type ChatCreateOrConnectWithoutRentalRequestsInput = {
+    where: ChatWhereUniqueInput
+    create: XOR<ChatCreateWithoutRentalRequestsInput, ChatUncheckedCreateWithoutRentalRequestsInput>
+  }
+
+  export type ListingCreateWithoutRentalRequestsInput = {
+    id?: string
+    title: string
+    make: $Enums.Make
+    model: string
+    year: number
+    trim?: string | null
+    body_type: $Enums.BodyType
+    exterior_color: string
+    interior_color?: string | null
+    horsepower: number
+    doors?: number | null
+    fuel_type: $Enums.FuelType
+    cylinders?: number | null
+    engine_capacity_cc?: number | null
+    battery_capacity_kwh?: number | null
+    range_km?: number | null
+    seating_capacity: number
+    transmission_type: $Enums.TransmissionType
+    mileage_km: number
+    price_per_day: number
+    deposit?: number | null
+    min_rental_days?: number
+    max_rental_days?: number
+    description: string
+    available?: boolean
+    city: string
+    district: $Enums.District
+    status?: $Enums.ListingStatus
+    images?: ListingCreateimagesInput | string[]
+    platformAssured?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: UserCreateNestedOneWithoutListingsInput
+    orders?: OrderCreateNestedManyWithoutListingInput
+    chats?: ChatCreateNestedManyWithoutListingInput
+  }
+
+  export type ListingUncheckedCreateWithoutRentalRequestsInput = {
+    id?: string
+    ownerId: string
+    title: string
+    make: $Enums.Make
+    model: string
+    year: number
+    trim?: string | null
+    body_type: $Enums.BodyType
+    exterior_color: string
+    interior_color?: string | null
+    horsepower: number
+    doors?: number | null
+    fuel_type: $Enums.FuelType
+    cylinders?: number | null
+    engine_capacity_cc?: number | null
+    battery_capacity_kwh?: number | null
+    range_km?: number | null
+    seating_capacity: number
+    transmission_type: $Enums.TransmissionType
+    mileage_km: number
+    price_per_day: number
+    deposit?: number | null
+    min_rental_days?: number
+    max_rental_days?: number
+    description: string
+    available?: boolean
+    city: string
+    district: $Enums.District
+    status?: $Enums.ListingStatus
+    images?: ListingCreateimagesInput | string[]
+    platformAssured?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orders?: OrderUncheckedCreateNestedManyWithoutListingInput
+    chats?: ChatUncheckedCreateNestedManyWithoutListingInput
+  }
+
+  export type ListingCreateOrConnectWithoutRentalRequestsInput = {
+    where: ListingWhereUniqueInput
+    create: XOR<ListingCreateWithoutRentalRequestsInput, ListingUncheckedCreateWithoutRentalRequestsInput>
+  }
+
+  export type ChatUpsertWithoutRentalRequestsInput = {
+    update: XOR<ChatUpdateWithoutRentalRequestsInput, ChatUncheckedUpdateWithoutRentalRequestsInput>
+    create: XOR<ChatCreateWithoutRentalRequestsInput, ChatUncheckedCreateWithoutRentalRequestsInput>
+    where?: ChatWhereInput
+  }
+
+  export type ChatUpdateToOneWithWhereWithoutRentalRequestsInput = {
+    where?: ChatWhereInput
+    data: XOR<ChatUpdateWithoutRentalRequestsInput, ChatUncheckedUpdateWithoutRentalRequestsInput>
+  }
+
+  export type ChatUpdateWithoutRentalRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    lastMessage?: StringFieldUpdateOperationsInput | string
+    isLastMessageRead?: BoolFieldUpdateOperationsInput | boolean
+    lastMessageSenderId?: StringFieldUpdateOperationsInput | string
+    messages?: MessageUpdateManyWithoutChatNestedInput
+    listing?: ListingUpdateOneRequiredWithoutChatsNestedInput
+    ownerUser?: UserUpdateOneRequiredWithoutOwnerChatsNestedInput
+    chatUser?: UserUpdateOneRequiredWithoutChatUserChatsNestedInput
+  }
+
+  export type ChatUncheckedUpdateWithoutRentalRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    listingId?: StringFieldUpdateOperationsInput | string
+    chatUserId?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    lastMessage?: StringFieldUpdateOperationsInput | string
+    isLastMessageRead?: BoolFieldUpdateOperationsInput | boolean
+    lastMessageSenderId?: StringFieldUpdateOperationsInput | string
+    messages?: MessageUncheckedUpdateManyWithoutChatNestedInput
+  }
+
+  export type ListingUpsertWithoutRentalRequestsInput = {
+    update: XOR<ListingUpdateWithoutRentalRequestsInput, ListingUncheckedUpdateWithoutRentalRequestsInput>
+    create: XOR<ListingCreateWithoutRentalRequestsInput, ListingUncheckedCreateWithoutRentalRequestsInput>
+    where?: ListingWhereInput
+  }
+
+  export type ListingUpdateToOneWithWhereWithoutRentalRequestsInput = {
+    where?: ListingWhereInput
+    data: XOR<ListingUpdateWithoutRentalRequestsInput, ListingUncheckedUpdateWithoutRentalRequestsInput>
+  }
+
+  export type ListingUpdateWithoutRentalRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    make?: EnumMakeFieldUpdateOperationsInput | $Enums.Make
+    model?: StringFieldUpdateOperationsInput | string
+    year?: IntFieldUpdateOperationsInput | number
+    trim?: NullableStringFieldUpdateOperationsInput | string | null
+    body_type?: EnumBodyTypeFieldUpdateOperationsInput | $Enums.BodyType
+    exterior_color?: StringFieldUpdateOperationsInput | string
+    interior_color?: NullableStringFieldUpdateOperationsInput | string | null
+    horsepower?: IntFieldUpdateOperationsInput | number
+    doors?: NullableIntFieldUpdateOperationsInput | number | null
+    fuel_type?: EnumFuelTypeFieldUpdateOperationsInput | $Enums.FuelType
+    cylinders?: NullableIntFieldUpdateOperationsInput | number | null
+    engine_capacity_cc?: NullableIntFieldUpdateOperationsInput | number | null
+    battery_capacity_kwh?: NullableFloatFieldUpdateOperationsInput | number | null
+    range_km?: NullableIntFieldUpdateOperationsInput | number | null
+    seating_capacity?: IntFieldUpdateOperationsInput | number
+    transmission_type?: EnumTransmissionTypeFieldUpdateOperationsInput | $Enums.TransmissionType
+    mileage_km?: IntFieldUpdateOperationsInput | number
+    price_per_day?: FloatFieldUpdateOperationsInput | number
+    deposit?: NullableFloatFieldUpdateOperationsInput | number | null
+    min_rental_days?: IntFieldUpdateOperationsInput | number
+    max_rental_days?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    available?: BoolFieldUpdateOperationsInput | boolean
+    city?: StringFieldUpdateOperationsInput | string
+    district?: EnumDistrictFieldUpdateOperationsInput | $Enums.District
+    status?: EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+    images?: ListingUpdateimagesInput | string[]
+    platformAssured?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutListingsNestedInput
+    orders?: OrderUpdateManyWithoutListingNestedInput
+    chats?: ChatUpdateManyWithoutListingNestedInput
+  }
+
+  export type ListingUncheckedUpdateWithoutRentalRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    make?: EnumMakeFieldUpdateOperationsInput | $Enums.Make
+    model?: StringFieldUpdateOperationsInput | string
+    year?: IntFieldUpdateOperationsInput | number
+    trim?: NullableStringFieldUpdateOperationsInput | string | null
+    body_type?: EnumBodyTypeFieldUpdateOperationsInput | $Enums.BodyType
+    exterior_color?: StringFieldUpdateOperationsInput | string
+    interior_color?: NullableStringFieldUpdateOperationsInput | string | null
+    horsepower?: IntFieldUpdateOperationsInput | number
+    doors?: NullableIntFieldUpdateOperationsInput | number | null
+    fuel_type?: EnumFuelTypeFieldUpdateOperationsInput | $Enums.FuelType
+    cylinders?: NullableIntFieldUpdateOperationsInput | number | null
+    engine_capacity_cc?: NullableIntFieldUpdateOperationsInput | number | null
+    battery_capacity_kwh?: NullableFloatFieldUpdateOperationsInput | number | null
+    range_km?: NullableIntFieldUpdateOperationsInput | number | null
+    seating_capacity?: IntFieldUpdateOperationsInput | number
+    transmission_type?: EnumTransmissionTypeFieldUpdateOperationsInput | $Enums.TransmissionType
+    mileage_km?: IntFieldUpdateOperationsInput | number
+    price_per_day?: FloatFieldUpdateOperationsInput | number
+    deposit?: NullableFloatFieldUpdateOperationsInput | number | null
+    min_rental_days?: IntFieldUpdateOperationsInput | number
+    max_rental_days?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    available?: BoolFieldUpdateOperationsInput | boolean
+    city?: StringFieldUpdateOperationsInput | string
+    district?: EnumDistrictFieldUpdateOperationsInput | $Enums.District
+    status?: EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+    images?: ListingUpdateimagesInput | string[]
+    platformAssured?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUncheckedUpdateManyWithoutListingNestedInput
+    chats?: ChatUncheckedUpdateManyWithoutListingNestedInput
   }
 
   export type ListingCreateManyOwnerInput = {
@@ -11705,6 +14144,14 @@ export namespace Prisma {
     lastMessageSenderId?: string
   }
 
+  export type MessageCreateManySenderInput = {
+    id?: string
+    chatId: string
+    message: string
+    type?: $Enums.MessageType
+    createdAt?: Date | string
+  }
+
   export type ListingUpdateWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -11740,6 +14187,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orders?: OrderUpdateManyWithoutListingNestedInput
     chats?: ChatUpdateManyWithoutListingNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutListingNestedInput
   }
 
   export type ListingUncheckedUpdateWithoutOwnerInput = {
@@ -11777,6 +14225,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orders?: OrderUncheckedUpdateManyWithoutListingNestedInput
     chats?: ChatUncheckedUpdateManyWithoutListingNestedInput
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutListingNestedInput
   }
 
   export type ListingUncheckedUpdateManyWithoutOwnerInput = {
@@ -11864,6 +14313,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutChatNestedInput
     listing?: ListingUpdateOneRequiredWithoutChatsNestedInput
     chatUser?: UserUpdateOneRequiredWithoutChatUserChatsNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutChatNestedInput
   }
 
   export type ChatUncheckedUpdateWithoutOwnerUserInput = {
@@ -11877,6 +14327,7 @@ export namespace Prisma {
     isLastMessageRead?: BoolFieldUpdateOperationsInput | boolean
     lastMessageSenderId?: StringFieldUpdateOperationsInput | string
     messages?: MessageUncheckedUpdateManyWithoutChatNestedInput
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutChatNestedInput
   }
 
   export type ChatUncheckedUpdateManyWithoutOwnerUserInput = {
@@ -11902,6 +14353,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutChatNestedInput
     listing?: ListingUpdateOneRequiredWithoutChatsNestedInput
     ownerUser?: UserUpdateOneRequiredWithoutOwnerChatsNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutChatNestedInput
   }
 
   export type ChatUncheckedUpdateWithoutChatUserInput = {
@@ -11915,6 +14367,7 @@ export namespace Prisma {
     isLastMessageRead?: BoolFieldUpdateOperationsInput | boolean
     lastMessageSenderId?: StringFieldUpdateOperationsInput | string
     messages?: MessageUncheckedUpdateManyWithoutChatNestedInput
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutChatNestedInput
   }
 
   export type ChatUncheckedUpdateManyWithoutChatUserInput = {
@@ -11927,6 +14380,30 @@ export namespace Prisma {
     lastMessage?: StringFieldUpdateOperationsInput | string
     isLastMessageRead?: BoolFieldUpdateOperationsInput | boolean
     lastMessageSenderId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MessageUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chat?: ChatUpdateOneRequiredWithoutMessagesNestedInput
+  }
+
+  export type MessageUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageUncheckedUpdateManyWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OrderCreateManyListingInput = {
@@ -11952,6 +14429,18 @@ export namespace Prisma {
     lastMessage?: string
     isLastMessageRead?: boolean
     lastMessageSenderId?: string
+  }
+
+  export type RentalRequestCreateManyListingInput = {
+    id?: string
+    chatId: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type OrderUpdateWithoutListingInput = {
@@ -12004,6 +14493,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutChatNestedInput
     ownerUser?: UserUpdateOneRequiredWithoutOwnerChatsNestedInput
     chatUser?: UserUpdateOneRequiredWithoutChatUserChatsNestedInput
+    rentalRequests?: RentalRequestUpdateManyWithoutChatNestedInput
   }
 
   export type ChatUncheckedUpdateWithoutListingInput = {
@@ -12017,6 +14507,7 @@ export namespace Prisma {
     isLastMessageRead?: BoolFieldUpdateOperationsInput | boolean
     lastMessageSenderId?: StringFieldUpdateOperationsInput | string
     messages?: MessageUncheckedUpdateManyWithoutChatNestedInput
+    rentalRequests?: RentalRequestUncheckedUpdateManyWithoutChatNestedInput
   }
 
   export type ChatUncheckedUpdateManyWithoutListingInput = {
@@ -12031,24 +14522,75 @@ export namespace Prisma {
     lastMessageSenderId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type RentalRequestUpdateWithoutListingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chat?: ChatUpdateOneRequiredWithoutRentalRequestsNestedInput
+  }
+
+  export type RentalRequestUncheckedUpdateWithoutListingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RentalRequestUncheckedUpdateManyWithoutListingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MessageCreateManyChatInput = {
     id?: string
     message: string
     senderId: string
+    type?: $Enums.MessageType
     createdAt?: Date | string
+  }
+
+  export type RentalRequestCreateManyChatInput = {
+    id?: string
+    listingId: string
+    renterId: string
+    ownerId: string
+    status?: $Enums.RentalRequestStatus
+    rentalStart: Date | string
+    rentalEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MessageUpdateWithoutChatInput = {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
-    senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutMessagesNestedInput
   }
 
   export type MessageUncheckedUpdateWithoutChatInput = {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -12056,7 +14598,44 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RentalRequestUpdateWithoutChatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listing?: ListingUpdateOneRequiredWithoutRentalRequestsNestedInput
+  }
+
+  export type RentalRequestUncheckedUpdateWithoutChatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    listingId?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RentalRequestUncheckedUpdateManyWithoutChatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    listingId?: StringFieldUpdateOperationsInput | string
+    renterId?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    status?: EnumRentalRequestStatusFieldUpdateOperationsInput | $Enums.RentalRequestStatus
+    rentalStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    rentalEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
