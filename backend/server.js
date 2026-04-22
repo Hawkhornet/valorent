@@ -6,9 +6,10 @@ import { serve } from "inngest/express";
 import { inngest, functions } from "./inngest/index.js";
 import listingRouter from "./routes/listingRoutes.js";
 import chatRouter from "./routes/chatRoutes.js";
+import helmet from "helmet";
 
 const app = express();
-
+app.use(helmet());
 app.use(express.json());
 app.use(cors())
 app.use(clerkMiddleware())
