@@ -94,6 +94,9 @@ export const getAllUserListing = async (req, res) => {
     try {
         const { userId } = await req.auth();
 
+        // Reconcile statuses so owner's listings reflect completed rentals
+        await reconcileOrderStatuses();
+
         const listings = await prisma.listing.findMany({
             where: { ownerId: userId, status: { not: "deleted" } },
             orderBy: { createdAt: "desc" },
@@ -103,7 +106,7 @@ export const getAllUserListing = async (req, res) => {
             where: {
                 ownerId: userId,
                 isPaid: true,
-                status: { in: ['active', 'completed'] }
+                status: 'completed'
             }
         })
 
@@ -258,11 +261,50 @@ export const deleteUserListing = async (req, res) => {
     }
 }
 
+const reconcileOrderStatuses = async () => {
+    const now = new Date();
+    const in24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+    // Complete expired orders and restore their listings
+    const expiredOrders = await prisma.order.findMany({
+        where: {
+            rental_end: { lte: now },
+            status: { not: "completed" },
+        },
+        select: { id: true, listingId: true },
+    });
+
+    for (const order of expiredOrders) {
+        await prisma.$transaction([
+            prisma.order.update({
+                where: { id: order.id },
+                data: { status: "completed" },
+            }),
+            prisma.listing.update({
+                where: { id: order.listingId },
+                data: { status: "active" },
+            }),
+        ]);
+    }
+
+    // Transition active orders that end within 24 hours to ending_soon
+    await prisma.order.updateMany({
+        where: {
+            rental_end: { gt: now, lte: in24Hours },
+            status: "active",
+        },
+        data: { status: "ending_soon" },
+    });
+};
+
 export const getAllUserOrders = async (req, res) => {
     try {
         const { userId } = await req.auth();
 
         if (!userId) return res.status(401).json({ message: 'Unauthorized' })
+
+        // Reconcile statuses before returning so the user always sees fresh data
+        await reconcileOrderStatuses();
 
         const orders = await prisma.order.findMany({
             where: { userId, isPaid: true },
@@ -299,7 +341,7 @@ export const getAllUserOrders = async (req, res) => {
                     include: {
                         messages: {
                             orderBy: { createdAt: 'desc' },
-                            take: 1, // just the latest message
+                            take: 1,
                         }
                     }
                 })

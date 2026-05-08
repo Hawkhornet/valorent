@@ -9,6 +9,7 @@ import Messages from './pages/Messages'
 import MyOrders from './pages/MyOrders'
 import Navbar from './components/Navbar'
 import Chatbox from './components/ChatBox'
+import AIChatbot from './components/AIChatbot'
 import { Toaster } from 'react-hot-toast'
 import { useAuth, useUser } from '@clerk/react'
 import { useDispatch } from 'react-redux'
@@ -46,6 +47,7 @@ const App = () => {
             <Route path='/my-orders' element={<MyOrders />} />
         </Routes>
         <Chatbox />
+        <AIChatbot />
     </div>
   )
 }

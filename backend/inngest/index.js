@@ -83,9 +83,55 @@ const syncUserUpdation = inngest.createFunction(
 );
 
 
+// Cron job: run every hour to transition order and listing statuses based on rental dates
+const updateOrderStatuses = inngest.createFunction(
+  { id: "update-order-statuses", triggers: [{ cron: "0 * * * *" }] },
+  async () => {
+    const now = new Date();
+    const in24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+    // Complete orders whose rental_end has passed and restore their listings to active
+    const expiredOrders = await prisma.order.findMany({
+      where: {
+        rental_end: { lte: now },
+        status: { not: "completed" },
+      },
+      select: { id: true, listingId: true },
+    });
+
+    for (const order of expiredOrders) {
+      await prisma.$transaction([
+        prisma.order.update({
+          where: { id: order.id },
+          data: { status: "completed" },
+        }),
+        prisma.listing.update({
+          where: { id: order.listingId },
+          data: { status: "active" },
+        }),
+      ]);
+    }
+
+    // Mark as ending_soon: rental ends within the next 24 hours and order is still active
+    await prisma.order.updateMany({
+      where: {
+        rental_end: { gt: now, lte: in24Hours },
+        status: "active",
+      },
+      data: { status: "ending_soon" },
+    });
+
+    return {
+      completed: expiredOrders.length,
+      timestamp: now.toISOString(),
+    };
+  }
+);
+
 // Create an empty array where we'll export future Inngest functions
 export const functions = [
     syncUserCreation,
     syncUserDeletion,
-    syncUserUpdation
+    syncUserUpdation,
+    updateOrderStatuses,
 ];
