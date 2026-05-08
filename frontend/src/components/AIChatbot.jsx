@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Loader2Icon, SendIcon, XIcon, BotIcon, SparklesIcon, ChevronDownIcon } from "lucide-react";
 import api from "../configs/axios";
 
@@ -19,7 +19,7 @@ const parseMarkdown = (text) => {
         .replace(/\n/g, "<br/>");
 };
 
-const MessageBubble = ({ message }) => {
+const MessageBubble = ({ message, navigate }) => {
     const isUser = message.role === "user";
     const html = parseMarkdown(message.content);
 
@@ -40,7 +40,7 @@ const MessageBubble = ({ message }) => {
                 onClick={(e) => {
                     const link = e.target.closest("[data-link]");
                     if (link) {
-                        window.location.href = link.dataset.link;
+                        navigate(link.dataset.link);
                     }
                 }}
             />
@@ -78,6 +78,7 @@ const QUICK_REPLIES = [
 ];
 
 const AIChatbot = () => {
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([WELCOME_MESSAGE]);
     const [input, setInput] = useState("");
@@ -188,7 +189,7 @@ const AIChatbot = () => {
                     {/* Messages */}
                     <div className="flex-1 overflow-y-auto p-4 bg-gray-50 min-h-0">
                         {messages.map((msg, i) => (
-                            <MessageBubble key={i} message={msg} />
+                            <MessageBubble key={i} message={msg} navigate={navigate} />
                         ))}
                         {isLoading && <TypingIndicator />}
                         <div ref={messagesEndRef} />
